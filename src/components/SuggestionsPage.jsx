@@ -159,11 +159,7 @@ export default function SuggestionsPage({ onBackToCampaign }) {
                   <strong className={styles.autoIdentityName}>
                     {user?.displayName || "Campus Student"}
                   </strong>
-                  {user?.email && (
-                    <span className={styles.autoIdentityEmail}> ({user.email})</span>
-                  )}
                 </div>
-                <span className={styles.autoVerifiedPill}>✓ Auto-attached</span>
               </div>
 
               {/* Category selector */}

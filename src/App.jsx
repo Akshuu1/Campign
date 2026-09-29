@@ -17,7 +17,7 @@ import { verifyAdminEmail } from "./utils/security";
 const AdminPortal = React.lazy(() => import("./components/AdminPortal"));
 
 const BASE_TABS = [
-  { id: "campaign", label: "Campaign", Icon: VoteIcon },
+  { id: "campaign", label: "Why to Vote Me", Icon: VoteIcon },
   { id: "planner", label: "My Meals", Icon: PlateIcon },
   { id: "leaderboard", label: "Leaderboard", Icon: TrophyIcon, highlight: true },
   { id: "suggestions", label: "Suggestions", Icon: ChatIcon },

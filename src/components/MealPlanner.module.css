@@ -108,47 +108,77 @@
 @keyframes slideUpToast { from { opacity: 0; transform: translate(-50%, 30px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
 @media (max-width: 768px) {
-  .root { padding: 1rem 0.5rem 4rem; }
-  .hubGrid { grid-template-columns: 1fr; gap: 1rem; }
+  .root { padding: 1rem 0.6rem 4rem; }
+  .dedicatedRoot { padding: 1rem 0.6rem 4rem; }
+  .hubGrid { grid-template-columns: 1fr; gap: 0.9rem; }
   .thaliGrid { grid-template-columns: 1fr; gap: 1rem; }
-  .dishGrid { grid-template-columns: 1fr; gap: 0.8rem; }
-  .hero { margin-bottom: 1.5rem; gap: 1rem; flex-direction: column; align-items: flex-start; }
-  .heroTitle { font-size: 1.8rem; }
-  .akshatTag { font-size: 0.85rem; padding: 0.4rem 1rem; }
-  
-  .hubCard { padding: 1.2rem; border-radius: 20px; }
-  .hubIconBox { width: 60px; height: 60px; border-radius: 16px; }
-  .hubCardHeader { margin-bottom: 1rem; }
-  .hubFruitBadge { font-size: 0.75rem; padding: 0.3rem 0.8rem; }
-  .hubTiming { font-size: 0.75rem; }
-  .hubCardTitle { font-size: 1.5rem; }
-  .hubPreviewBox { padding: 1rem; min-height: 60px; margin-bottom: 1rem; }
-  .hubMiniChip { font-size: 0.75rem; padding: 0.3rem 0.6rem; }
-  .hubOpenBtn { padding: 0.8rem 1.2rem; font-size: 0.95rem; border-radius: 16px; }
-  .hubCountBubble { font-size: 0.8rem; padding: 0.2rem 0.6rem; }
-  
-  .dedicatedTitle { font-size: 1.8rem; }
-  .plateCountNum { font-size: 1.8rem; }
-  .mealDedicatedHero { padding: 1.5rem; gap: 1rem; border-radius: 24px; margin-bottom: 1.5rem; }
-  .heroIconWrapper { width: 60px; height: 60px; border-radius: 16px; }
-  .heroLeft { flex-direction: row; text-align: left; gap: 1rem; }
-  .heroRightBadge { width: 100%; padding: 1rem; flex-direction: row; justify-content: space-between; border-radius: 16px; }
-  .funkyStickerBadge, .timingBadge { font-size: 0.8rem; padding: 0.3rem 0.8rem; }
-  
-  .fruitBoosterModule, .uniqueMealModule, .studioCard, .dishesSection { padding: 1.2rem; border-radius: 20px; margin-bottom: 1.5rem; }
-  .moduleTitle, .sectionHeading span { font-size: 1.3rem; }
-  .fruitChip, .suggestionChip { font-size: 0.85rem; padding: 0.5rem 1rem; }
-  .thaliCol { padding: 1.2rem; border-radius: 16px; }
-  .thaliColTitle { font-size: 1.1rem; }
-  .thaliItemBtn { padding: 0.6rem 0.8rem; font-size: 0.85rem; }
-  .spicePill { font-size: 0.75rem; padding: 0.3rem 0.8rem; }
-  
-  .mealInput { padding: 0.8rem 1.2rem; font-size: 0.95rem; }
-  .addBtn { padding: 0.8rem 1.5rem; font-size: 0.95rem; }
-  .dishCard { padding: 0.8rem 1rem; }
-  .dishName { font-size: 0.95rem; }
-  
-  .footerBack, .nextMealBtn { padding: 0.8rem 1.2rem; font-size: 0.95rem; width: 100%; justify-content: center; }
-  .studioFooter { flex-direction: column; gap: 1rem; }
-  .addRow { flex-direction: column; }
+  .dishGrid { grid-template-columns: 1fr; gap: 0.75rem; }
+  .hero { margin-bottom: 1.2rem; gap: 0.7rem; flex-direction: column; align-items: flex-start; }
+  .heroTitle { font-size: 2rem; }
+  .akshatTag { font-size: 0.82rem; padding: 0.35rem 0.9rem; }
+
+  .hubCard { padding: 1.1rem; border-radius: 20px; }
+  .hubIconBox { width: 56px; height: 56px; border-radius: 14px; }
+  .hubCardHeader { margin-bottom: 0.9rem; }
+  .hubFruitBadge { font-size: 0.73rem; padding: 0.28rem 0.75rem; }
+  .hubTiming { font-size: 0.73rem; }
+  .hubCardTitle { font-size: 1.4rem; }
+  .hubPreviewBox { padding: 0.9rem; min-height: 55px; margin-bottom: 0.9rem; border-radius: 16px; }
+  .emptyPreviewHint { font-size: 0.92rem; }
+  .hubMiniChip { font-size: 0.73rem; padding: 0.28rem 0.55rem; }
+  .hubOpenBtn { padding: 0.75rem 1.1rem; font-size: 0.9rem; border-radius: 14px; }
+  .hubCountBubble { font-size: 0.78rem; padding: 0.18rem 0.55rem; }
+
+  .topNav { margin-bottom: 1.2rem; gap: 0.7rem; flex-wrap: wrap; }
+  .backBtn { padding: 0.6rem 1.1rem; font-size: 0.88rem; }
+  .switcherTabs { padding: 0.3rem; gap: 0.3rem; overflow-x: auto; }
+  .switcherTab { padding: 0.55rem 0.9rem; font-size: 0.82rem; }
+  .dedicatedTitle { font-size: 2rem; }
+  .plateCountNum { font-size: 2rem; }
+  .plateCountLbl { font-size: 0.78rem; }
+  .mealDedicatedHero { padding: 1.2rem; gap: 0.9rem; border-radius: 22px; margin-bottom: 1.2rem; }
+  .heroIconWrapper { width: 56px; height: 56px; border-radius: 14px; }
+  .heroLeft { flex-direction: row; text-align: left; gap: 0.9rem; }
+  .heroRightBadge { width: 100%; padding: 0.9rem; flex-direction: row; justify-content: space-between; border-radius: 14px; }
+  .funkyStickerBadge, .timingBadge { font-size: 0.78rem; padding: 0.28rem 0.75rem; }
+  .heroMetaRow { gap: 0.55rem; margin-bottom: 0.65rem; }
+
+  .fruitBoosterModule, .uniqueMealModule, .studioCard, .dishesSection { padding: 1.1rem; border-radius: 18px; margin-bottom: 1.1rem; }
+  .moduleTitle, .sectionHeading span { font-size: 1.2rem; }
+  .moduleHeader, .sectionHeading { gap: 0.65rem; margin-bottom: 1.1rem; }
+  .fruitChip, .suggestionChip { font-size: 0.82rem; padding: 0.45rem 0.9rem; }
+  .thaliCol { padding: 1rem; border-radius: 14px; }
+  .thaliColTitle { font-size: 1rem; margin-bottom: 0.9rem; padding-bottom: 0.6rem; }
+  .thaliItemBtn { padding: 0.55rem 0.75rem; font-size: 0.82rem; border-radius: 12px; }
+  .spicePill { font-size: 0.72rem; padding: 0.28rem 0.7rem; }
+  .spicePillGroup { gap: 0.4rem; }
+  .thaliItemsWrap { gap: 0.75rem; }
+
+  .mealInput { padding: 0.75rem 1rem; font-size: 0.92rem; border-radius: 14px; }
+  .addBtn { padding: 0.75rem 1.2rem; font-size: 0.9rem; border-radius: 14px; }
+  .dishCard { padding: 0.75rem 0.9rem; border-radius: 16px; }
+  .dishName { font-size: 0.92rem; }
+  .dishNum { width: 36px; height: 36px; font-size: 0.95rem; }
+
+  .footerBack, .nextMealBtn { padding: 0.75rem 1rem; font-size: 0.9rem; width: 100%; justify-content: center; }
+  .studioFooter { flex-direction: column; gap: 0.8rem; margin-top: 1.8rem; }
+  .addRow { flex-direction: column; gap: 0.65rem; }
+
+  .emptyState { padding: 2.5rem 1rem; border-radius: 20px; }
+  .emptyState h3 { font-size: 1.4rem; margin-top: 1rem; }
+  .emptyState p { font-size: 0.92rem; }
+}
+
+@media (max-width: 400px) {
+  .root, .dedicatedRoot { padding: 0.5rem 0.4rem 3.5rem; }
+  .heroTitle { font-size: 1.7rem; }
+  .hubCard { padding: 0.9rem; }
+  .hubCardTitle { font-size: 1.25rem; }
+  .hubOpenBtn { font-size: 0.85rem; padding: 0.65rem 0.9rem; }
+  .dedicatedTitle { font-size: 1.65rem; }
+  .mealDedicatedHero { padding: 1rem; }
+  .fruitBoosterModule, .uniqueMealModule, .studioCard, .dishesSection { padding: 0.9rem; border-radius: 16px; }
+  .topNav { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+  .backBtn { width: 100%; justify-content: center; }
+  .switcherTabs { justify-content: center; }
 }

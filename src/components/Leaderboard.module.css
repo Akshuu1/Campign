@@ -582,26 +582,32 @@
 /* Mobile responsive */
 @media (max-width: 640px) {
   .root {
-    padding: 1rem 0.5rem 4rem;
+    padding: 0.75rem 0.4rem 4rem;
   }
   .hero {
-    padding: 1.1rem;
-    gap: 1rem;
+    padding: 1rem;
+    gap: 0.8rem;
+    border-radius: 18px;
+    margin-bottom: 1.2rem;
   }
   .heroIconWrap {
-    width: 52px;
-    height: 52px;
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
   }
   .heroTitle {
-    font-size: 1.5rem;
+    font-size: 1.45rem;
   }
   .heroSub {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
   }
   .controlsBar {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.6rem;
+    gap: 0.55rem;
+  }
+  .searchWrap {
+    min-width: 0;
   }
   .filterTabs {
     width: 100%;
@@ -610,56 +616,80 @@
   .filterBtn {
     flex: 1;
     text-align: center;
-    padding: 0.45rem 0.5rem;
-    font-size: 0.75rem;
+    padding: 0.42rem 0.45rem;
+    font-size: 0.73rem;
   }
   .table {
-    border-radius: 18px;
+    border-radius: 16px;
+    overflow-x: auto;
   }
   .headerRow, .row {
-    grid-template-columns: 32px 1fr 56px 54px 68px;
-    padding: 0.75rem 0.75rem;
-    gap: 0.4rem;
+    grid-template-columns: 30px 1fr 52px 50px 64px;
+    padding: 0.7rem 0.65rem;
+    gap: 0.35rem;
   }
   .headerRow {
-    font-size: 0.68rem;
+    font-size: 0.66rem;
   }
   .rankNum {
-    font-size: 0.95rem;
-  }
-  .medalBadge {
-    width: 26px;
-    height: 26px;
-    font-size: 0.85rem;
-  }
-  .avatar, .avatarFallback {
-    width: 32px;
-    height: 32px;
     font-size: 0.9rem;
   }
+  .medalBadge {
+    width: 24px;
+    height: 24px;
+    font-size: 0.82rem;
+  }
+  .avatar, .avatarFallback {
+    width: 30px;
+    height: 30px;
+    font-size: 0.85rem;
+  }
   .nameText {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
   }
   .viewMenuHint {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
   }
   .youTag {
-    font-size: 0.62rem;
-    padding: 0.1rem 0.4rem;
+    font-size: 0.6rem;
+    padding: 0.08rem 0.35rem;
   }
   .mealPill, .votePill {
-    font-size: 0.75rem;
-    padding: 0.2rem 0.45rem;
+    font-size: 0.72rem;
+    padding: 0.18rem 0.4rem;
   }
   .voteBtn {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.75rem;
+    padding: 0.38rem 0.55rem;
+    font-size: 0.72rem;
     border-radius: 8px;
   }
   .ctaCard {
-    padding: 1.2rem;
-    gap: 1rem;
+    padding: 1.1rem;
+    gap: 0.9rem;
     flex-direction: column;
     text-align: center;
+    border-radius: 16px;
   }
+  .ctaIconBox {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .root { padding: 0.5rem 0.35rem 3.5rem; }
+  .hero { padding: 0.85rem; gap: 0.7rem; }
+  .heroTitle { font-size: 1.25rem; }
+  .heroBadge { font-size: 0.66rem; }
+  .headerRow, .row {
+    grid-template-columns: 26px 1fr 46px 44px 58px;
+    padding: 0.6rem 0.5rem;
+    gap: 0.28rem;
+  }
+  .nameText { font-size: 0.8rem; }
+  .viewMenuHint { display: none; }
+  .mealPill, .votePill { font-size: 0.68rem; padding: 0.15rem 0.32rem; }
+  .voteBtn { padding: 0.32rem 0.45rem; font-size: 0.68rem; }
 }
