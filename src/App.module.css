@@ -269,11 +269,14 @@
   }
 
   .gateFeatures {
-    align-items: center;
+    align-items: flex-start;
+    width: fit-content;
+    margin: 0 auto;
   }
 
   .gateFeatureItem {
-    justify-content: center;
+    justify-content: flex-start;
+    text-align: left;
   }
 }
 
