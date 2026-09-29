@@ -26,13 +26,18 @@ export default function LoginScreen({ onClose }) {
       await signInWithGoogle();
       if (onClose) onClose();
     } catch (err) {
-      console.error(err);
-      if (err.code === "auth/popup-closed-by-user") {
+      console.error("Login error:", err);
+      const currentHost = window.location.hostname;
+      if (err.code === "auth/unauthorized-domain") {
+        setError(`Domain "${currentHost}" is not authorized in Firebase. Please add "${currentHost}" to Firebase Console → Authentication → Settings → Authorized domains.`);
+      } else if (err.code === "auth/popup-blocked") {
+        setError("Popup was blocked by your browser. Please allow popups for this site and try again.");
+      } else if (err.code === "auth/popup-closed-by-user") {
         setError("Sign-in window was closed before completion. Please try again.");
       } else if (err.message && err.message.includes("Cross-Origin-Opener-Policy")) {
-        setError("Local dev environment blocked popup. This works automatically in production.");
+        setError("Browser popup policy interrupted sign-in. Please tap again to retry.");
       } else {
-        setError("Google sign-in failed. Please try again.");
+        setError(err.message || "Google sign-in failed. Please try again.");
       }
     } finally {
       setLoading(false);
