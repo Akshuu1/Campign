@@ -76,48 +76,34 @@ export default function SuggestionsPage({ onBackToCampaign }) {
         <div className={styles.suggestCardGlow} />
 
         <div className={styles.suggestCard}>
-          {/* Header Row */}
-          <div className={styles.suggestHeaderRow}>
-            <div className={styles.suggestTopBadges}>
-              <span className={styles.directPill}>
-                <ChatIcon size={14} color="#C2410C" />
-                DIRECT LINE TO ME
-              </span>
-              <span className={styles.privatePill}>
-                <ShieldIcon size={14} color="#059669" />
-                100% Confidential
-              </span>
+          {/* Clean modern header */}
+          <div className={styles.cleanHeader}>
+            <div className={styles.headerLeftInfo}>
+              <h2 className={styles.suggestMainTitle}>
+                Suggestions for the Mess
+              </h2>
+              <p className={styles.suggestSubtitle}>
+                Tell <strong>Akshat</strong> what dishes or improvements you want. Your feedback goes directly to him.
+              </p>
             </div>
-
-            <div className={styles.avatarThumbnailBadge}>
+            <div className={styles.candidateMiniBadge}>
               <img
                 src={akshatPhoto}
                 alt="Akshat"
                 className={styles.badgeAkshatImg}
-                loading="eager"
-                decoding="async"
               />
               <span className={styles.badgeOnlineDot} />
             </div>
           </div>
 
-          <div className={styles.suggestIntro}>
-            <h2 className={styles.suggestMainTitle}>
-              Send a Suggestion to <span className={styles.titleGradient}>Me</span> 💬
-            </h2>
-            <p className={styles.suggestSubtitle}>
-              Have an idea for new dishes, timing changes, or kitchen hygiene? Speak up! Every word is delivered <strong>privately</strong> straight to me.
-            </p>
-          </div>
-
           {submitted ? (
             <div className={styles.successCelebration}>
               <div className={styles.successCheckIconWrap}>
-                <CheckIcon size={32} color="white" />
+                <CheckIcon size={28} color="white" />
               </div>
-              <h3 className={styles.successTitle}>Suggestion Received! 🎉</h3>
+              <h3 className={styles.successTitle}>Thank you! Suggestion Received</h3>
               <p className={styles.successDesc}>
-                Thank you for speaking up! I will personally review your feedback and bring it straight to the Mess Committee table.
+                Your feedback has been sent directly to Akshat to present to the Mess Committee.
               </p>
               <div className={styles.successActions}>
                 <button
@@ -125,7 +111,7 @@ export default function SuggestionsPage({ onBackToCampaign }) {
                   className={styles.anotherSugBtn}
                   onClick={() => setSubmitted(false)}
                 >
-                  + Submit Another Idea
+                  Submit Another
                 </button>
                 {onBackToCampaign && (
                   <button
@@ -133,75 +119,26 @@ export default function SuggestionsPage({ onBackToCampaign }) {
                     className={styles.returnCampaignBtn}
                     onClick={onBackToCampaign}
                   >
-                    View My Campaign →
+                    Back to Campaign →
                   </button>
                 )}
               </div>
             </div>
           ) : (
             <form className={styles.suggestFormWrap} onSubmit={handleSuggestionSubmit}>
-              {/* Auto-detected Student Identity Badge */}
-              <div className={styles.autoIdentityBadge}>
-                <div className={styles.autoAvatar}>
-                  {user?.photoURL ? (
-                    <img
-                      src={user.photoURL}
-                      alt={user.displayName}
-                      className={styles.autoAvatarImg}
-                      referrerPolicy="no-referrer"
-                    />
-                  ) : (
-                    <span>{(user?.displayName || "S").charAt(0).toUpperCase()}</span>
-                  )}
-                </div>
-                <div className={styles.autoIdentityText}>
-                  <span className={styles.autoIdentityLabel}>Submitting as:</span>
-                  <strong className={styles.autoIdentityName}>
-                    {user?.displayName || "Campus Student"}
-                  </strong>
-                </div>
-              </div>
-
-              {/* Category selector */}
-              <div className={styles.formGroup}>
-                <div className={styles.formLabelRow}>
-                  <label className={styles.fieldLabel}>Select Topic Area</label>
-                  <span className={styles.labelHint}>Choose where your idea belongs</span>
-                </div>
-                <div className={styles.categoryPillsGrid}>
-                  {CATEGORIES.map(cat => {
-                    const isSelected = category === cat.id;
-                    return (
-                      <button
-                        key={cat.id}
-                        type="button"
-                        onClick={() => setCategory(cat.id)}
-                        className={`${styles.catPillBtn} ${isSelected ? styles.catPillBtnActive : ""}`}
-                      >
-                        <span className={styles.catEmoji}>{cat.icon}</span>
-                        <span>{cat.label}</span>
-                        {isSelected && <span className={styles.catActiveTick}>✓</span>}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Quick inspiration chips */}
-              <div className={styles.quickInspirationsBox}>
-                <span className={styles.quickPromptTitle}>
-                  <SparkleIcon size={14} color="#FB8500" />
-                  Quick Ideas to Tap &amp; Add:
-                </span>
-                <div className={styles.chipsRow}>
-                  {QUICK_PROMPTS.map((prompt) => (
+              {/* Category Dropdown & Quick Ideas Selector */}
+              <div className={styles.categorySelectRow}>
+                <label className={styles.fieldLabel} htmlFor="category-select">Topic</label>
+                <div className={styles.categoryPillsWrap}>
+                  {CATEGORIES.map(cat => (
                     <button
-                      key={prompt}
+                      key={cat.id}
                       type="button"
-                      className={styles.quickPromptChip}
-                      onClick={() => appendQuickPrompt(prompt)}
+                      onClick={() => setCategory(cat.id)}
+                      className={`${styles.catPillBtn} ${category === cat.id ? styles.catPillBtnActive : ""}`}
                     >
-                      + {prompt}
+                      <span>{cat.icon}</span>
+                      <span>{cat.label}</span>
                     </button>
                   ))}
                 </div>
@@ -211,42 +148,48 @@ export default function SuggestionsPage({ onBackToCampaign }) {
               <div className={styles.formGroup}>
                 <div className={styles.formLabelRow}>
                   <label className={styles.fieldLabel}>
-                    What would you like to improve or add to the mess? <span className={styles.requiredStar}>*</span>
+                    Your message
                   </label>
-                  <span className={styles.charCounter}>{suggestion.length} / 500 characters</span>
+                  <span className={styles.charCounter}>{suggestion.length}/500</span>
                 </div>
                 <textarea
                   className={styles.styledTextarea}
-                  placeholder="Tell me: What specific dishes do you miss? Are rotis soft? Any timing or quantity issues? Share your honest thoughts..."
+                  placeholder="e.g. Better paneer on Fridays, crispier dosas, fresh fruits in breakfast, milk timings..."
                   value={suggestion}
                   maxLength={500}
                   onChange={(e) => setSuggestion(e.target.value)}
-                  rows={5}
+                  rows={4}
                   required
                 />
               </div>
 
-              {/* Bottom bar with trust badge and submit button */}
+              {/* Quick inspiration chips */}
+              <div className={styles.quickChipsInline}>
+                <span className={styles.quickPromptLabel}>Quick add:</span>
+                {QUICK_PROMPTS.slice(0, 3).map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    className={styles.quickPromptChip}
+                    onClick={() => appendQuickPrompt(prompt)}
+                  >
+                    + {prompt}
+                  </button>
+                ))}
+              </div>
+
+              {/* Bottom bar */}
               <div className={styles.suggestFooterBar}>
-                <div className={styles.trustInfoBox}>
-                  <div className={styles.shieldPulseBox}>
-                    <ShieldIcon size={20} color="#059669" />
-                  </div>
-                  <div>
-                    <strong className={styles.trustTitle}>Private Submission Guarantee</strong>
-                    <span className={styles.trustSub}>
-                      Your suggestion is never displayed publicly. Only I can read it.
-                    </span>
-                  </div>
-                </div>
+                <span className={styles.trustSub}>
+                  🔒 Private &amp; direct to Akshat
+                </span>
 
                 <button
                   type="submit"
                   className={styles.sendSuggestionBtn}
                   disabled={isSubmitting || !suggestion.trim()}
                 >
-                  <span>{isSubmitting ? "Delivering..." : "Submit Privately to Me"}</span>
-                  <span className={styles.btnArrow}>→</span>
+                  <span>{isSubmitting ? "Sending..." : "Send Suggestion"}</span>
                 </button>
               </div>
             </form>

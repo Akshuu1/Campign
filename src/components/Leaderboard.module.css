@@ -1,5 +1,5 @@
 .root {
-  padding: 1.5rem 1rem 6rem;
+  padding: 0.5rem 0.5rem 4rem;
   max-width: 920px;
   margin: 0 auto;
   animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;

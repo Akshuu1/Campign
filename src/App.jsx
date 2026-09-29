@@ -100,24 +100,22 @@ export default function App() {
             </div>
 
             <div className={styles.gateHeadline}>
-              <span className={styles.gateHeadlineBadge}>
-                <VoteIcon size={14} color="white" /> Vote 5 Oct
-              </span>
+
               <h2 className={styles.gateH2}>
                 The campus mess,<br />
                 <span className={styles.gateAccent}>reimagined by you.</span>
               </h2>
               <p className={styles.gateDesc}>
                 Design your daily thali, vote on the leaderboard, and send direct suggestions
-                to <strong>me</strong> — all in one place. Sign in to get started.
+                to <strong>Akshat</strong> — all in one place. Sign in to get started.
               </p>
             </div>
 
             <div className={styles.gateFeatures}>
               {[
-                { Icon: PlateIcon,   color: "#FF3366", label: "Design Custom Meals" },
-                { Icon: TrophyIcon,  color: "#FB8500", label: "Campus Leaderboard"  },
-                { Icon: ChatIcon,    color: "#00CC99", label: "Direct Suggestions"  },
+                { Icon: PlateIcon, color: "#FF3366", label: "Design Custom Meals" },
+                { Icon: TrophyIcon, color: "#FB8500", label: "Campus Leaderboard" },
+                { Icon: ChatIcon, color: "#00CC99", label: "Direct Suggestions" },
               ].map(({ Icon, color, label }) => (
                 <div key={label} className={styles.gateFeatureItem}>
                   <div className={styles.gateFeatureIcon}>
@@ -209,8 +207,8 @@ export default function App() {
               color={
                 activeTab === id ? "white"
                   : adminPill ? "#FB8500"
-                  : highlight ? "#10B981"
-                  : "#8E8273"
+                    : highlight ? "#10B981"
+                      : "#8E8273"
               }
             />
             {label}

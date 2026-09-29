@@ -26,15 +26,17 @@ const MEAL_CONFIGS = {
     accentBg: "#FFFDF5",
     accentDark: "#B45309",
     heroGradient: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 55%, #FED7AA 100%)",
-    fruitBoosters: [
-      "Mango Lassi 🥭", "Banana Chia Bowl 🍌", "Fresh Orange Juice 🍊",
-      "Papaya & Melon 🍉", "Coconut Water 🥥", "Apple Oats 🍎"
+
+    fruitOptions: [
+      { emoji: "🍌", name: "Banana" }, { emoji: "🍎", name: "Apple" },
+      { emoji: "🍊", name: "Orange" }, { emoji: "🍉", name: "Watermelon" },
+
     ],
     hotSpecials: [
       "Masala Dosa", "Indori Poha", "Aloo Paratha",
       "Idli Vada", "Upma Chutney", "Moong Dal Chilla"
     ],
-    sticker: "🥭 FRESH START",
+    sticker: "🌅 FRESH START",
     nextId: "lunch",
   },
   lunch: {
@@ -48,10 +50,7 @@ const MEAL_CONFIGS = {
     accentBg: "#F4FDF9",
     accentDark: "#065F46",
     heroGradient: "linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 55%, #A7F3D0 100%)",
-    fruitBoosters: [
-      "Pineapple Raita 🍍", "Lemon Shikanji 🍋", "Avocado Salad 🥑",
-      "Mango Chutney 🥭", "Fresh Chhaas 🥛", "Cucumber Lime 🥗"
-    ],
+
     thaliSections: [
       {
         title: "Curries & Dal",
@@ -67,6 +66,9 @@ const MEAL_CONFIGS = {
       }
     ],
     spiceLevels: ["Mild", "Medium 🌶️", "Spicy 🌶️🌶️"],
+    sweetSuggestions: [
+      "Gulab Jamun", "Rasgulla", "Kheer", "Gajar Halwa", "Jalebi", "Moong Dal Halwa"
+    ],
     sticker: "🥑 POWER UP",
     nextId: "snacks",
   },
@@ -81,14 +83,17 @@ const MEAL_CONFIGS = {
     accentBg: "#FFF9FA",
     accentDark: "#9F1239",
     heroGradient: "linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 55%, #FECDD3 100%)",
-    fruitBoosters: [
-      "Watermelon Cooler 🍉", "Strawberry Shake 🍓", "Masala Fruit Chaat 🍍",
-      "Banana Crunch 🍌", "Guava Sip 🍈", "Mango Frooti 🥭"
-    ],
+
     snackPicks: [
       { tag: "Hot Bites", items: ["Hot Samosa", "Paneer Pakoda", "Aloo Tikki", "Bread Pakoda"] },
       { tag: "Hostel Hits", items: ["Cheese Maggi", "Grilled Sandwich", "Pav Bhaji", "Bhel Puri"] },
-      { tag: "Quick Sweet", items: ["Peri Peri Fries", "Bun Maska", "Hot Jalebi", "Cold Coffee"] }
+      { tag: "Baked", items: ["Peri Peri Fries", "Bun Maska", "Hot Jalebi", "Corn Chaat"] }
+    ],
+    drinkPicks: [
+      { emoji: "☕", name: "Cold Coffee" }, { emoji: "🥛", name: "Sweet Lassi" },
+      { emoji: "🥛", name: "Salted Lassi" }, { emoji: "🧋", name: "Rose Milk" },
+      { emoji: "🍋", name: "Lemon Soda" }, { emoji: "🥤", name: "Mango Shake" },
+      { emoji: "🧃", name: "Butter Milk" }, { emoji: "🍵", name: "Masala Chai" }
     ],
     sticker: "🍉 CHILL BITES",
     nextId: "dinner",
@@ -104,14 +109,11 @@ const MEAL_CONFIGS = {
     accentBg: "#FFFDF5",
     accentDark: "#78350F",
     heroGradient: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 55%, #FDE68A 100%)",
-    fruitBoosters: [
-      "Grilled Pineapple 🍍", "Mango Shrikhand 🥭", "Fruit Custard 🥣",
-      "Banana Halwa 🍌", "Coconut Kheer 🥥", "Anjeer Milk 🥛"
-    ],
+
     dinnerSpecials: [
       { type: "Campus Favorites", items: ["Veg Biryani & Salan", "Dal Tadka & Rice", "Kadai Paneer & Phulka"] },
       { type: "Comfort Supper", items: ["Khichdi & Papad", "Paneer Bhurji & Roti", "Veg Pulao & Raita"] },
-      { type: "Sweet Treats", items: ["Hakka Noodles", "Malai Kofta", "Gulab Jamun", "Moong Dal Halwa"] }
+      { type: "Sweet Dishes", items: ["Gulab Jamun", "Ice Cream", "Moong Dal Halwa", "Rasgulla", "Kheer", "Jalebi"] }
     ],
     sticker: "🍍 NIGHT DELIGHT",
     nextId: "breakfast",
@@ -323,106 +325,245 @@ export default function MealPlanner() {
           </div>
         </div>
 
-        {/* 1-Click Fruit & Drink Boosters */}
-        <div className={styles.fruitBoosterModule}>
-          <div className={styles.moduleHeader}>
-            <FruitBowlIcon size={26} />
-            <h3 className={styles.moduleTitle}>Fresh Fruit &amp; Drink Boosters</h3>
-          </div>
-          <div className={styles.fruitChipsRow}>
-            {config.fruitBoosters.map((fruit) => {
-              const isAdded = currentList.includes(fruit);
-              return (
-                <button
-                  key={fruit}
-                  className={`${styles.fruitChip} ${isAdded ? styles.chipAdded : ""}`}
-                  onClick={() => addMealItem(selectedMealId, fruit)}
-                  disabled={isAdded}
-                >
-                  <span>{fruit}</span>
-                  {isAdded ? <CheckIcon size={14} color="var(--theme-primary)" /> : <span className={styles.funkyAddPlus}>+</span>}
-                </button>
-              );
-            })}
-          </div>
-        </div>
 
-        {/* Lunch Thali Sections */}
+        {/* ── BREAKFAST ── */}
+        {selectedMealId === "breakfast" && (
+          <>
+            {/* Fruits */}
+            <div className={styles.uniqueMealModule}>
+              <div className={styles.moduleHeader}>
+                <span style={{ fontSize: 22 }}>🍎</span>
+                <h3 className={styles.moduleTitle}>Pick Your Fruits</h3>
+              </div>
+              <div className={styles.fruitEmojiGrid}>
+                {config.fruitOptions.map((f) => {
+                  const isAdded = currentList.includes(f.name);
+                  return (
+                    <button
+                      key={f.name}
+                      className={`${styles.fruitEmojiBtn} ${isAdded ? styles.fruitEmojiBtnAdded : ""}`}
+                      onClick={() => addMealItem("breakfast", f.name)}
+                      disabled={isAdded}
+                    >
+                      <span className={styles.fruitEmoji}>{f.emoji}</span>
+                      <span className={styles.fruitEmojiName}>{f.name}</span>
+                      {isAdded && <CheckIcon size={12} color="var(--theme-primary)" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Hot Specials */}
+            <div className={styles.uniqueMealModule}>
+              <div className={styles.moduleHeader}>
+                <span style={{ fontSize: 22 }}>🍳</span>
+                <h3 className={styles.moduleTitle}>Hot Specials</h3>
+              </div>
+              <div className={styles.suggestionChips}>
+                {config.hotSpecials.map((dish) => {
+                  const isAdded = currentList.includes(dish);
+                  return (
+                    <button
+                      key={dish}
+                      disabled={isAdded}
+                      className={`${styles.suggestionChip} ${isAdded ? styles.chipAdded : ""}`}
+                      onClick={() => addMealItem("breakfast", dish)}
+                    >
+                      <span>{dish}</span>
+                      {isAdded ? <CheckIcon size={13} color="var(--theme-primary)" /> : <span className={styles.addPlus}>+</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ── LUNCH ── */}
         {selectedMealId === "lunch" && (
-          <div className={styles.uniqueMealModule}>
-            <div className={styles.moduleHeader}>
-              <ThaliIcon size={26} color="var(--theme-primary)" />
-              <h3 className={styles.moduleTitle}>Thali Selections</h3>
-              <div className={styles.spicePillGroup}>
-                {config.spiceLevels.map((s) => (
-                  <button
-                    key={s}
-                    className={`${styles.spicePill} ${selectedSpice === s ? styles.spiceActive : ""}`}
-                    onClick={() => setSelectedSpice(s)}
-                  >
-                    {s}
-                  </button>
+          <>
+            <div className={styles.uniqueMealModule}>
+              <div className={styles.moduleHeader}>
+                <ThaliIcon size={26} color="var(--theme-primary)" />
+                <h3 className={styles.moduleTitle}>Thali Selections</h3>
+                <div className={styles.spicePillGroup}>
+                  {config.spiceLevels.map((s) => (
+                    <button
+                      key={s}
+                      className={`${styles.spicePill} ${selectedSpice === s ? styles.spiceActive : ""}`}
+                      onClick={() => setSelectedSpice(s)}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className={styles.thaliGrid}>
+                {config.thaliSections.map((sec) => (
+                  <div key={sec.title} className={styles.thaliCol}>
+                    <h4 className={styles.thaliColTitle}>{sec.title}</h4>
+                    <div className={styles.thaliItemsWrap}>
+                      {sec.items.map((item) => {
+                        const isAdded = currentList.includes(item);
+                        return (
+                          <button
+                            key={item}
+                            className={`${styles.thaliItemBtn} ${isAdded ? styles.chipAdded : ""}`}
+                            onClick={() => addMealItem("lunch", item)}
+                            disabled={isAdded}
+                          >
+                            <span>{item}</span>
+                            {isAdded ? <CheckIcon size={13} color="var(--theme-primary)" /> : <span className={styles.funkyAddPlus}>+</span>}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <div className={styles.thaliGrid}>
-              {config.thaliSections.map((sec) => (
-                <div key={sec.title} className={styles.thaliCol}>
-                  <h4 className={styles.thaliColTitle}>{sec.title}</h4>
-                  <div className={styles.thaliItemsWrap}>
-                    {sec.items.map((item) => {
-                      const isAdded = currentList.includes(item);
-                      return (
-                        <button
-                          key={item}
-                          className={`${styles.thaliItemBtn} ${isAdded ? styles.chipAdded : ""}`}
-                          onClick={() => addMealItem("lunch", item)}
-                          disabled={isAdded}
-                        >
-                          <span>{item}</span>
-                          {isAdded ? <CheckIcon size={13} color="var(--theme-primary)" /> : <span className={styles.funkyAddPlus}>+</span>}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
+            {/* Sweet Ending */}
+            <div className={styles.sweetModule}>
+              <div className={styles.moduleHeader}>
+                <span style={{ fontSize: 22 }}>🍮</span>
+                <h3 className={styles.moduleTitle}>Sweet Ending</h3>
+              </div>
+              <div className={styles.suggestionChips}>
+                {config.sweetSuggestions.map((sweet) => {
+                  const isAdded = currentList.includes(sweet);
+                  return (
+                    <button
+                      key={sweet}
+                      disabled={isAdded}
+                      className={`${styles.sweetChip} ${isAdded ? styles.chipAdded : ""}`}
+                      onClick={() => addMealItem("lunch", sweet)}
+                    >
+                      <span>{sweet}</span>
+                      {isAdded ? <CheckIcon size={13} color="var(--theme-primary)" /> : <span className={styles.addPlus}>+</span>}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          </>
         )}
 
-        {/* Snacks Section */}
+        {/* ── SNACKS ── */}
         {selectedMealId === "snacks" && (
-          <div className={styles.uniqueMealModule}>
-            <div className={styles.moduleHeader}>
-              <StrawberryIcon size={26} />
-              <h3 className={styles.moduleTitle}>Canteen Munchies</h3>
-            </div>
-            <div className={styles.snacksSectionList}>
-              {config.snackPicks.map((group) => (
-                <div key={group.tag} className={styles.snackGroup}>
-                  <span className={styles.snackGroupTag}>{group.tag}</span>
-                  <div className={styles.suggestionChips}>
-                    {group.items.map((snk) => {
-                      const isAdded = currentList.includes(snk);
-                      return (
-                        <button
-                          key={snk}
-                          className={`${styles.suggestionChip} ${isAdded ? styles.chipAdded : ""}`}
-                          onClick={() => addMealItem("snacks", snk)}
-                          disabled={isAdded}
-                        >
-                          <span>{snk}</span>
-                          {isAdded ? <CheckIcon size={14} color="var(--theme-primary)" /> : <span className={styles.addPlus}>+</span>}
-                        </button>
-                      );
-                    })}
+          <>
+            <div className={styles.uniqueMealModule}>
+              <div className={styles.moduleHeader}>
+                <StrawberryIcon size={26} />
+                <h3 className={styles.moduleTitle}>Canteen Munchies</h3>
+              </div>
+              <div className={styles.snacksSectionList}>
+                {config.snackPicks.map((group) => (
+                  <div key={group.tag} className={styles.snackGroup}>
+                    <span className={styles.snackGroupTag}>{group.tag}</span>
+                    <div className={styles.suggestionChips}>
+                      {group.items.map((snk) => {
+                        const isAdded = currentList.includes(snk);
+                        return (
+                          <button
+                            key={snk}
+                            className={`${styles.suggestionChip} ${isAdded ? styles.chipAdded : ""}`}
+                            onClick={() => addMealItem("snacks", snk)}
+                            disabled={isAdded}
+                          >
+                            <span>{snk}</span>
+                            {isAdded ? <CheckIcon size={14} color="var(--theme-primary)" /> : <span className={styles.addPlus}>+</span>}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+
+            {/* Drinks */}
+            <div className={styles.sweetModule}>
+              <div className={styles.moduleHeader}>
+                <span style={{ fontSize: 22 }}>🥤</span>
+                <h3 className={styles.moduleTitle}>Drinks & Refreshments</h3>
+              </div>
+              <div className={styles.fruitEmojiGrid}>
+                {config.drinkPicks.map((d) => {
+                  const isAdded = currentList.includes(d.name);
+                  return (
+                    <button
+                      key={d.name}
+                      className={`${styles.fruitEmojiBtn} ${isAdded ? styles.fruitEmojiBtnAdded : ""}`}
+                      onClick={() => addMealItem("snacks", d.name)}
+                      disabled={isAdded}
+                    >
+                      <span className={styles.fruitEmoji}>{d.emoji}</span>
+                      <span className={styles.fruitEmojiName}>{d.name}</span>
+                      {isAdded && <CheckIcon size={12} color="var(--theme-primary)" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ── DINNER ── */}
+        {selectedMealId === "dinner" && (
+          <>
+            {config.dinnerSpecials.filter(c => c.type !== "Sweet Dishes").map((cat) => (
+              <div key={cat.type} className={styles.uniqueMealModule}>
+                <div className={styles.moduleHeader}>
+                  <span style={{ fontSize: 20 }}>{cat.type === "Campus Favorites" ? "⭐" : "🌙"}</span>
+                  <h3 className={styles.moduleTitle}>{cat.type}</h3>
+                </div>
+                <div className={styles.suggestionChips}>
+                  {cat.items.map((dish) => {
+                    const isAdded = currentList.includes(dish);
+                    return (
+                      <button
+                        key={dish}
+                        disabled={isAdded}
+                        className={`${styles.suggestionChip} ${isAdded ? styles.chipAdded : ""}`}
+                        onClick={() => addMealItem("dinner", dish)}
+                      >
+                        <span>{dish}</span>
+                        {isAdded ? <CheckIcon size={13} color="var(--theme-primary)" /> : <span className={styles.addPlus}>+</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+
+            {/* Sweet Dishes */}
+            <div className={styles.sweetModule}>
+              <div className={styles.moduleHeader}>
+                <span style={{ fontSize: 22 }}>🍨</span>
+                <h3 className={styles.moduleTitle}>Sweet Dishes</h3>
+              </div>
+              <div className={styles.fruitEmojiGrid}>
+                {(config.dinnerSpecials.find(c => c.type === "Sweet Dishes")?.items || []).map((sweet) => {
+                  const isAdded = currentList.includes(sweet);
+                  const icons = { "Gulab Jamun": "🟤", "Ice Cream": "🍦", "Moong Dal Halwa": "🟡", "Rasgulla": "⚪", "Kheer": "🥣", "Jalebi": "🌀" };
+                  return (
+                    <button
+                      key={sweet}
+                      className={`${styles.fruitEmojiBtn} ${isAdded ? styles.fruitEmojiBtnAdded : ""}`}
+                      onClick={() => addMealItem("dinner", sweet)}
+                      disabled={isAdded}
+                    >
+                      <span className={styles.fruitEmoji}>{icons[sweet] || "🍬"}</span>
+                      <span className={styles.fruitEmojiName}>{sweet}</span>
+                      {isAdded && <CheckIcon size={12} color="var(--theme-primary)" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
         )}
 
         {/* Custom Add Input */}
@@ -446,49 +587,6 @@ export default function MealPlanner() {
               Add
             </button>
           </div>
-
-          {/* Quick recommendations */}
-          {selectedMealId === "breakfast" && (
-            <div className={styles.suggestionsBlock}>
-              <div className={styles.suggestionChips}>
-                {config.hotSpecials.map((dish) => {
-                  const isAdded = currentList.includes(dish);
-                  return (
-                    <button
-                      key={dish}
-                      disabled={isAdded}
-                      className={`${styles.suggestionChip} ${isAdded ? styles.chipAdded : ""}`}
-                      onClick={() => addMealItem("breakfast", dish)}
-                    >
-                      <span>{dish}</span>
-                      {isAdded ? <CheckIcon size={13} color="var(--theme-primary)" /> : <span className={styles.addPlus}>+</span>}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {selectedMealId === "dinner" && (
-            <div className={styles.suggestionsBlock}>
-              <div className={styles.suggestionChips}>
-                {config.dinnerSpecials.flatMap((c) => c.items).map((dish) => {
-                  const isAdded = currentList.includes(dish);
-                  return (
-                    <button
-                      key={dish}
-                      disabled={isAdded}
-                      className={`${styles.suggestionChip} ${isAdded ? styles.chipAdded : ""}`}
-                      onClick={() => addMealItem("dinner", dish)}
-                    >
-                      <span>{dish}</span>
-                      {isAdded ? <CheckIcon size={13} color="var(--theme-primary)" /> : <span className={styles.addPlus}>+</span>}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Selected Dishes Grid */}
