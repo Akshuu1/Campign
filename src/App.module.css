@@ -1,0 +1,230 @@
+/* Ultra Vibrant Light Mode */
+.splash {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.5rem; background: var(--bg-main); color: var(--text-main);
+}
+.splash p { color: var(--primary); font-weight: 700; font-size: 1.3rem; letter-spacing: 2px; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.95); } }
+
+.appRoot { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* Glowing Gradient Banner */
+.banner {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white; font-size: 0.95rem; font-weight: 800;
+  padding: 0.7rem 1.5rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.8rem;
+  position: relative; text-align: center; box-shadow: var(--shadow-glow);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.bannerTrack {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Floating Glass Header */
+.header {
+  background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 2px solid white;
+  padding: 1.1rem 2.5rem; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+.headerLeft { display: flex; align-items: center; gap: 1.2rem; }
+.headerTitle { font-size: 1.8rem; font-weight: 900; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.headerSub { font-size: 0.92rem; color: var(--text-muted); margin-top: 0.1rem; font-weight: 700; }
+
+.headerRight { display: flex; align-items: center; gap: 0.9rem; }
+
+/* Quick Admin Header Shortcut Button */
+.adminHeaderBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #FFF7ED;
+  border: 1.5px solid #FFEDD5;
+  border-radius: 12px;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.88rem;
+  font-weight: 900;
+  color: #C2410C;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  font-family: inherit;
+}
+
+.adminHeaderBtn:hover {
+  background: #FFEDD5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(251, 133, 0, 0.2);
+}
+
+.adminHeaderBtnActive {
+  background: #1C1C1E !important;
+  color: white !important;
+  border-color: #1C1C1E !important;
+}
+
+.adminLiveDot {
+  width: 8px;
+  height: 8px;
+  background: #10B981;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #10B981;
+}
+
+.userPill {
+  display: flex; align-items: center; gap: 0.5rem;
+  background: white; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border-radius: 50px; padding: 0.25rem 0.9rem 0.25rem 0.25rem; font-weight: 800;
+}
+.avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.userInitial {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white; font-weight: 900; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.userName { font-size: 0.95rem; color: var(--text-main); font-weight: 800; }
+
+.signOutBtn {
+  background: white; border: 2px solid transparent; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  border-radius: 12px; padding: 0.55rem 1.2rem; color: var(--text-main);
+  font-size: 0.9rem; font-weight: 800; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-family: inherit; cursor: pointer;
+}
+.signOutBtn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); border-color: var(--primary); color: var(--primary); }
+
+/* Eye-Catching Highlighted Sign In Button */
+.signInHighlightBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #FF3366, #FB8500);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(255, 51, 102, 0.38);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+  position: relative;
+  letter-spacing: 0.02em;
+}
+
+.signInHighlightBtn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 25px rgba(255, 51, 102, 0.5);
+  filter: brightness(1.05);
+}
+
+.signInPulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #FFE600;
+  box-shadow: 0 0 8px #FFE600;
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+/* Playful Navigation */
+.nav {
+  background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(15px);
+  border-bottom: 2px solid white;
+  padding: 0.9rem 2.5rem; display: flex; gap: 0.9rem; overflow-x: auto; scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+.navTab {
+  display: flex; align-items: center; gap: 0.55rem;
+  background: white; border: 2px solid rgba(0,0,0,0.03); border-radius: 14px;
+  padding: 0.75rem 1.4rem; font-size: 0.95rem; font-weight: 800; color: var(--text-muted);
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+  font-family: inherit; cursor: pointer;
+}
+.navTab:hover { color: var(--text-main); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.05); }
+.navTabActive {
+  background: var(--primary) !important; color: white !important;
+  border-color: var(--primary) !important; box-shadow: var(--shadow-glow) !important; transform: translateY(-2px);
+}
+.navTabHighlight {
+  margin-left: auto; background: rgba(16, 185, 129, 0.1) !important; color: #065F46 !important;
+  border-color: #A7F3D0 !important;
+}
+.navTabHighlight:hover {
+  background: #10B981 !important; color: white !important;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3) !important;
+}
+
+.navTabAdmin {
+  background: #FFF7ED;
+  color: #C2410C;
+  border-color: #FFEDD5;
+}
+.navTabAdmin:hover {
+  background: #FFEDD5;
+  color: #9A3412;
+}
+
+.adminNavActiveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+}
+
+.main { padding: 2rem 2.5rem; flex: 1; }
+
+@media (max-width: 768px) {
+  .banner { padding: 0.45rem 0.8rem; font-size: 0.72rem; }
+  .header { padding: 0.8rem 1rem; flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+  .headerRight { width: 100%; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+  .headerTitle { font-size: 1.3rem; }
+  .headerSub { font-size: 0.75rem; }
+  .nav { padding: 0.6rem 0.8rem; gap: 0.5rem; }
+  .navTab { font-size: 0.78rem; padding: 0.5rem 0.8rem; border-radius: 10px; }
+  .navTabHighlight { margin-left: 0; }
+  .main { padding: 1rem 0.4rem; }
+  .avatar { width: 28px; height: 28px; }
+  .userPill { padding: 0.2rem 0.7rem 0.2rem 0.2rem; font-size: 0.8rem; }
+  .signOutBtn { padding: 0.4rem 0.7rem; font-size: 0.78rem; border-radius: 8px; }
+  .adminHeaderBtn { padding: 0.4rem 0.7rem; font-size: 0.78rem; }
+}
+
+/* Instant Login Modal Overlay */
+.loginModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(20, 16, 14, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.loginModalContent {
+  width: 100%;
+  max-width: 440px;
+  animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}

@@ -1,0 +1,154 @@
+.root { padding: 2rem 1.5rem 5rem; max-width: 1040px; margin: 0 auto; animation: slideUp 0.5s ease; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+.hero { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+.heroText { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+.heroTitle { font-weight: 900; font-size: 3.2rem; color: var(--text-main); margin: 0; }
+.akshatTag { display: inline-flex; align-items: center; gap: 0.6rem; background: white; border: 2px solid rgba(0,0,0,0.05); border-radius: 50px; padding: 0.6rem 1.4rem; font-size: 1.05rem; font-weight: 800; color: var(--text-main); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+
+.hubGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; margin-bottom: 4rem; }
+.hubCard { background: white; border: 2px solid white; border-radius: 28px; padding: 2.5rem; display: flex; flex-direction: column; cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.03); position: relative; }
+.hubCard::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 8px; background: var(--cat-color); opacity: 0.8; transition: 0.3s ease; }
+.hubCard:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+.hubCard:hover::before { opacity: 1; height: 12px; }
+
+.hubCardHeader { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.8rem; gap: 1rem; }
+.hubIconBox { width: 90px; height: 90px; border-radius: 24px; background: var(--cat-light); display: flex; align-items: center; justify-content: center; transition: 0.4s ease; flex-shrink: 0; }
+.hubCard:hover .hubIconBox { transform: scale(1.1) rotate(5deg); }
+.hubBadgeCol { display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; }
+.hubFruitBadge { font-weight: 900; font-size: 0.9rem; color: var(--cat-dark); background: var(--cat-light); padding: 0.5rem 1rem; border-radius: 50px; }
+.hubTiming { font-size: 0.9rem; font-weight: 800; color: var(--text-muted); }
+
+.hubCardBody { margin-bottom: 1.5rem; }
+.hubCardTitle { font-weight: 900; font-size: 2.5rem; color: var(--text-main); margin: 0; }
+.hubPreviewBox { background: rgba(0,0,0,0.02); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.8rem; min-height: 80px; display: flex; align-items: center; }
+.emptyPreviewHint { font-size: 1.05rem; color: var(--text-muted); font-weight: 700; }
+.hubChipRow { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.hubMiniChip { font-size: 0.9rem; font-weight: 800; background: white; color: var(--text-main); padding: 0.5rem 1rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+.hubMiniChipMore { font-size: 0.9rem; font-weight: 900; color: var(--cat-color); padding-left: 0.5rem; }
+
+.hubOpenBtn { margin-top: auto; display: flex; align-items: center; justify-content: space-between; width: 100%; background: var(--text-main); color: white; border: none; border-radius: 20px; padding: 1.2rem 1.6rem; font-weight: 900; font-size: 1.15rem; cursor: pointer; transition: 0.3s ease; }
+.hubCountBubble { background: rgba(255,255,255,0.2); color: white; font-size: 1rem; font-weight: 900; padding: 0.3rem 1rem; border-radius: 50px; }
+.hubCard:hover .hubOpenBtn { background: var(--cat-color); transform: translateY(-3px); box-shadow: 0 10px 25px var(--cat-light); }
+
+/* Dedicated Meal View */
+.dedicatedRoot { padding: 2rem 1.5rem 5rem; max-width: 1040px; margin: 0 auto; animation: slideUp 0.4s ease; }
+.topNav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+.backBtn { display: inline-flex; align-items: center; gap: 0.6rem; background: white; border: none; border-radius: 50px; padding: 0.8rem 1.6rem; font-weight: 800; font-size: 1.05rem; color: var(--text-main); cursor: pointer; transition: 0.2s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.backBtn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.switcherTabs { display: flex; background: white; border-radius: 50px; padding: 0.5rem; gap: 0.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow-x: auto; }
+.switcherTab { display: flex; align-items: center; gap: 0.6rem; background: transparent; border: none; padding: 0.7rem 1.4rem; border-radius: 50px; font-weight: 800; font-size: 1rem; color: var(--text-muted); cursor: pointer; transition: 0.2s ease; white-space: nowrap; }
+.switcherTab:hover { color: var(--text-main); background: rgba(0,0,0,0.03); }
+.switcherTabActive { background: var(--theme-primary) !important; color: white !important; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+
+.mealDedicatedHero { background: var(--theme-gradient); border-radius: 32px; padding: 3rem 4rem; margin-bottom: 3rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+.heroLeft { display: flex; align-items: center; gap: 2.5rem; }
+.heroIconWrapper { width: 110px; height: 110px; border-radius: 32px; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 15px 35px rgba(0,0,0,0.1); flex-shrink: 0; }
+.heroMetaRow { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.funkyStickerBadge { font-weight: 900; font-size: 1rem; background: white; color: var(--theme-primary); padding: 0.5rem 1.2rem; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.timingBadge { background: rgba(255,255,255,0.8); color: var(--theme-dark); font-size: 1rem; font-weight: 800; padding: 0.5rem 1.2rem; border-radius: 50px; }
+.dedicatedTitle { font-weight: 900; font-size: 4rem; color: var(--theme-dark); margin: 0; letter-spacing: -0.02em; line-height: 1; }
+.heroRightBadge { display: flex; flex-direction: column; align-items: center; background: white; border-radius: 28px; padding: 1.5rem 2.5rem; box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
+.plateCountNum { font-weight: 900; font-size: 3.5rem; color: var(--theme-primary); line-height: 1; }
+.plateCountLbl { font-size: 0.95rem; font-weight: 900; color: var(--text-muted); text-transform: uppercase; margin-top: 0.4rem; }
+
+/* Modules */
+.fruitBoosterModule, .uniqueMealModule, .studioCard, .dishesSection { background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border: 2px solid white; border-radius: 32px; padding: 2.5rem 3rem; margin-bottom: 2.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.04); }
+.moduleHeader, .sectionHeading { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+.moduleTitle, .sectionHeading span { font-weight: 900; font-size: 1.8rem; color: var(--text-main); margin: 0; }
+
+.fruitChipsRow, .suggestionChips { display: flex; flex-wrap: wrap; gap: 1rem; }
+.fruitChip, .suggestionChip { display: inline-flex; align-items: center; gap: 0.8rem; background: white; border: none; border-radius: 50px; padding: 0.8rem 1.6rem; font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--text-main); cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+.fruitChip:hover:not(:disabled), .suggestionChip:hover:not(:disabled) { background: var(--theme-primary); color: white; transform: translateY(-4px); box-shadow: 0 10px 25px var(--theme-light); }
+.funkyAddPlus, .addPlus { font-weight: 900; font-size: 1.4rem; color: inherit; line-height: 1; }
+.chipAdded { background: #F3F4F6 !important; color: #9CA3AF !important; box-shadow: none !important; cursor: default; }
+
+.thaliGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.thaliCol { background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.03); }
+.thaliColTitle { font-weight: 900; font-size: 1.3rem; color: var(--theme-primary); margin: 0 0 1.5rem; border-bottom: 2px solid rgba(0,0,0,0.05); padding-bottom: 0.8rem; }
+.thaliItemsWrap { display: flex; flex-direction: column; gap: 1rem; }
+.thaliItemBtn { display: flex; align-items: center; justify-content: space-between; background: #F9FAFB; border: none; border-radius: 14px; padding: 1rem 1.2rem; font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--text-main); cursor: pointer; transition: 0.2s ease; text-align: left; }
+.thaliItemBtn:hover:not(:disabled) { background: var(--theme-light); color: var(--theme-dark); transform: translateX(5px); }
+
+.spicePillGroup { margin-left: auto; display: flex; align-items: center; gap: 0.6rem; }
+.spicePill { background: white; border: 2px solid rgba(0,0,0,0.05); border-radius: 50px; padding: 0.5rem 1.2rem; font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; color: var(--text-muted); cursor: pointer; transition: 0.2s ease; }
+.spicePill:hover { background: #F3F4F6; }
+.spiceActive { background: var(--theme-primary) !important; color: white !important; border-color: transparent !important; box-shadow: 0 6px 15px var(--theme-light); }
+
+.snacksSectionList { display: flex; flex-direction: column; gap: 2rem; }
+.snackGroup { display: flex; flex-direction: column; gap: 1rem; }
+.snackGroupTag { font-weight: 900; font-size: 1.1rem; color: var(--theme-primary); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.addRow { display: flex; gap: 1.2rem; }
+.mealInput { flex: 1; border: 2px solid rgba(0,0,0,0.08); border-radius: 20px; padding: 1.2rem 1.8rem; font-size: 1.2rem; font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--text-main); outline: none; background: white; transition: 0.3s ease; }
+.mealInput:focus { border-color: var(--theme-primary); box-shadow: 0 0 0 6px var(--theme-light); }
+.addBtn { display: inline-flex; align-items: center; justify-content: center; gap: 0.8rem; background: var(--theme-primary); color: white; border: none; border-radius: 20px; padding: 1.2rem 2.5rem; font-weight: 900; font-size: 1.2rem; cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px var(--theme-light); }
+.addBtn:hover { transform: translateY(-4px); filter: brightness(1.1); box-shadow: 0 15px 40px var(--theme-light); }
+
+.emptyState { text-align: center; padding: 5rem 2rem; border: 3px dashed rgba(0,0,0,0.1); border-radius: 32px; background: rgba(255,255,255,0.6); }
+.emptyState h3 { font-weight: 900; font-size: 1.8rem; color: var(--text-main); margin: 1.5rem 0 0.5rem; }
+.emptyState p { color: var(--text-muted); font-size: 1.15rem; font-weight: 700; margin: 0; }
+.dishGrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.dishCard { display: flex; align-items: center; gap: 1.2rem; background: white; border: 2px solid rgba(0,0,0,0.04); border-radius: 20px; padding: 1.2rem 1.5rem; box-shadow: 0 6px 20px rgba(0,0,0,0.04); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.dishCard:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-color: var(--theme-primary); }
+.dishNum { width: 40px; height: 40px; border-radius: 50%; background: var(--theme-light); color: var(--theme-primary); font-weight: 900; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.dishContent { flex: 1; display: flex; align-items: center; }
+.dishName { font-weight: 800; font-size: 1.15rem; color: var(--text-main); }
+.removeBtn { background: transparent; border: none; cursor: pointer; padding: 0.6rem; border-radius: 50%; transition: 0.2s ease; display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+.removeBtn:hover { background: #FFE0E0; color: #FF3366; transform: scale(1.1); }
+
+.studioFooter { display: flex; justify-content: space-between; align-items: center; margin-top: 3rem; }
+.footerBack, .nextMealBtn { display: inline-flex; align-items: center; gap: 0.8rem; background: white; border: none; border-radius: 50px; padding: 1.2rem 2.2rem; font-weight: 900; font-size: 1.15rem; cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 8px 25px rgba(0,0,0,0.05); }
+.footerBack { color: var(--text-main); }
+.footerBack:hover { background: white; transform: translateX(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+.nextMealBtn { background: var(--theme-primary); color: white; box-shadow: 0 12px 35px var(--theme-light); }
+.nextMealBtn:hover { transform: translateX(5px); filter: brightness(1.1); box-shadow: 0 15px 45px var(--theme-light); }
+
+.toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--text-main); color: white; padding: 1.2rem 2.5rem; border-radius: 50px; font-weight: 900; font-size: 1.15rem; box-shadow: 0 15px 40px rgba(0,0,0,0.2); z-index: 1000; animation: slideUpToast 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@keyframes slideUpToast { from { opacity: 0; transform: translate(-50%, 30px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+@media (max-width: 768px) {
+  .root { padding: 1rem 0.5rem 4rem; }
+  .hubGrid { grid-template-columns: 1fr; gap: 1rem; }
+  .thaliGrid { grid-template-columns: 1fr; gap: 1rem; }
+  .dishGrid { grid-template-columns: 1fr; gap: 0.8rem; }
+  .hero { margin-bottom: 1.5rem; gap: 1rem; flex-direction: column; align-items: flex-start; }
+  .heroTitle { font-size: 1.8rem; }
+  .akshatTag { font-size: 0.85rem; padding: 0.4rem 1rem; }
+  
+  .hubCard { padding: 1.2rem; border-radius: 20px; }
+  .hubIconBox { width: 60px; height: 60px; border-radius: 16px; }
+  .hubCardHeader { margin-bottom: 1rem; }
+  .hubFruitBadge { font-size: 0.75rem; padding: 0.3rem 0.8rem; }
+  .hubTiming { font-size: 0.75rem; }
+  .hubCardTitle { font-size: 1.5rem; }
+  .hubPreviewBox { padding: 1rem; min-height: 60px; margin-bottom: 1rem; }
+  .hubMiniChip { font-size: 0.75rem; padding: 0.3rem 0.6rem; }
+  .hubOpenBtn { padding: 0.8rem 1.2rem; font-size: 0.95rem; border-radius: 16px; }
+  .hubCountBubble { font-size: 0.8rem; padding: 0.2rem 0.6rem; }
+  
+  .dedicatedTitle { font-size: 1.8rem; }
+  .plateCountNum { font-size: 1.8rem; }
+  .mealDedicatedHero { padding: 1.5rem; gap: 1rem; border-radius: 24px; margin-bottom: 1.5rem; }
+  .heroIconWrapper { width: 60px; height: 60px; border-radius: 16px; }
+  .heroLeft { flex-direction: row; text-align: left; gap: 1rem; }
+  .heroRightBadge { width: 100%; padding: 1rem; flex-direction: row; justify-content: space-between; border-radius: 16px; }
+  .funkyStickerBadge, .timingBadge { font-size: 0.8rem; padding: 0.3rem 0.8rem; }
+  
+  .fruitBoosterModule, .uniqueMealModule, .studioCard, .dishesSection { padding: 1.2rem; border-radius: 20px; margin-bottom: 1.5rem; }
+  .moduleTitle, .sectionHeading span { font-size: 1.3rem; }
+  .fruitChip, .suggestionChip { font-size: 0.85rem; padding: 0.5rem 1rem; }
+  .thaliCol { padding: 1.2rem; border-radius: 16px; }
+  .thaliColTitle { font-size: 1.1rem; }
+  .thaliItemBtn { padding: 0.6rem 0.8rem; font-size: 0.85rem; }
+  .spicePill { font-size: 0.75rem; padding: 0.3rem 0.8rem; }
+  
+  .mealInput { padding: 0.8rem 1.2rem; font-size: 0.95rem; }
+  .addBtn { padding: 0.8rem 1.5rem; font-size: 0.95rem; }
+  .dishCard { padding: 0.8rem 1rem; }
+  .dishName { font-size: 0.95rem; }
+  
+  .footerBack, .nextMealBtn { padding: 0.8rem 1.2rem; font-size: 0.95rem; width: 100%; justify-content: center; }
+  .studioFooter { flex-direction: column; gap: 1rem; }
+  .addRow { flex-direction: column; }
+}
