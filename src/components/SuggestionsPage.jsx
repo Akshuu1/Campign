@@ -67,7 +67,7 @@ export default function SuggestionsPage({ onBackToCampaign }) {
       {onBackToCampaign && (
         <button className={styles.backBtn} onClick={onBackToCampaign}>
           <ArrowLeftIcon size={16} color="#5A534A" />
-          <span>Back to Campaign</span>
+          <span>Back</span>
         </button>
       )}
 
@@ -119,7 +119,7 @@ export default function SuggestionsPage({ onBackToCampaign }) {
                     className={styles.returnCampaignBtn}
                     onClick={onBackToCampaign}
                   >
-                    Back to Campaign →
+                    Back
                   </button>
                 )}
               </div>
