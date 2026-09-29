@@ -43,14 +43,6 @@
   pointer-events: none;
 }
 
-@media (max-width: 880px) {
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 2.5rem 1.8rem;
-    gap: 2.5rem;
-  }
-}
-
 .heroLeft, .heroRight { position: relative; z-index: 1; }
 
 .roleBadge {
@@ -443,28 +435,229 @@
 
 /* Mobile Responsiveness */
 @media (max-width: 880px) {
-  .root { padding: 0.5rem 0.5rem 3rem; }
-  .hero { padding: 1.8rem 1.4rem; border-radius: 24px; gap: 1.5rem; margin-bottom: 2rem; }
-  .heroTitle { font-size: 2.6rem; margin-bottom: 0.6rem; }
-  .heroDesc { font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.4; }
-  .roleBadge { font-size: 0.7rem; padding: 0.35rem 0.9rem; margin-bottom: 1rem; }
-  .voteDateRow { padding: 1rem; gap: 0.8rem; border-radius: 14px; flex-direction: column; width: 100%; align-items: flex-start; }
-  .voteDateCard { border-right: none; border-bottom: 2px dashed rgba(0,0,0,0.1); padding-right: 0; padding-bottom: 0.8rem; width: 100%; align-items: flex-start; }
-  .voteDateNum { font-size: 2.4rem; }
-  .voteDateLbl { font-size: 0.7rem; }
-  
-  .candidateArchFrame { width: 270px; height: 350px; border-radius: 135px 135px 24px 24px; }
-  .candidateLargeImg { transform: scale(1.35) translateY(10px); }
-  .candidateBackdropGlow { width: 240px; height: 240px; }
-  .candidateFloatingCard { padding: 0.5rem 1rem; margin-top: -18px; }
-  .candidateBadgeName { font-size: 1rem; }
-  
+  .root {
+    padding: 0.8rem 1rem 4rem;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 2.2rem 1.4rem;
+    border-radius: 28px;
+    gap: 2.2rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .heroLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .roleBadge {
+    font-size: 0.78rem;
+    padding: 0.4rem 1.1rem;
+    margin: 0 auto 1.2rem;
+    gap: 0.4rem;
+  }
+
+  .heroTitle {
+    font-size: 3.2rem;
+    margin: 0 0 0.8rem;
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .heroDesc {
+    font-size: 1.05rem;
+    line-height: 1.5;
+    margin: 0 auto 1.8rem;
+    max-width: 95%;
+    text-align: center;
+  }
+
+  .voteDateRow {
+    transform: none; /* remove desktop -1deg tilt */
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    padding: 0.9rem 1.4rem;
+    border-radius: 18px;
+  }
+
+  .voteDateCard {
+    border-right: 2px dashed rgba(0, 0, 0, 0.1);
+    border-bottom: none;
+    padding-right: 1.2rem;
+    padding-bottom: 0;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .voteDateNum {
+    font-size: 2.6rem;
+    line-height: 1;
+  }
+
+  .voteDateLbl {
+    font-size: 0.72rem;
+    margin-top: 0.2rem;
+  }
+
+  .voteDateInfo {
+    text-align: left;
+    gap: 0.25rem;
+  }
+
+  .voteDateInfo strong {
+    font-size: 1.05rem;
+  }
+
+  .voteDateInfo span {
+    font-size: 0.85rem;
+    line-height: 1.3;
+  }
+
+  .heroRight {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .candidateShowcase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .candidateBackdropGlow {
+    width: 250px;
+    height: 250px;
+  }
+
+  .candidateArchFrame {
+    width: 260px;
+    height: 340px;
+    border-radius: 130px 130px 24px 24px;
+    margin: 0 auto;
+  }
+
+  .candidateLargeImg {
+    transform: scale(1.32) translateY(6px);
+  }
+
+  .candidateFloatingCard {
+    margin-top: -20px;
+    padding: 0.5rem 1rem;
+    gap: 0.6rem;
+    max-width: 95%;
+    flex-wrap: wrap;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  .candidateBadgeName {
+    font-size: 1.05rem;
+  }
+
+  .candidateBadgeTag {
+    font-size: 0.68rem;
+  }
+
+  .candidateVoteOct5 {
+    font-size: 0.74rem;
+    padding: 0.25rem 0.65rem;
+  }
+
   .suggestInviteCard {
     flex-direction: column;
-    align-items: flex-start;
-    padding: 1.8rem 1.4rem;
-    gap: 1.2rem;
+    align-items: center;
+    text-align: center;
+    padding: 2.2rem 1.4rem;
+    border-radius: 24px;
+    gap: 1.4rem;
   }
-  .suggestInviteBtn { width: 100%; justify-content: center; }
-  .suggestInviteTitle { font-size: 1.4rem; }
+  .suggestInviteBtn {
+    width: 100%;
+    justify-content: center;
+  }
+  .suggestInviteTitle {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .root {
+    padding: 0.5rem 0.6rem 3.5rem;
+  }
+
+  .hero {
+    padding: 1.8rem 1rem;
+    border-radius: 22px;
+    gap: 1.6rem;
+  }
+
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroDesc {
+    font-size: 0.95rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .voteDateRow {
+    gap: 0.9rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .voteDateNum {
+    font-size: 2.2rem;
+  }
+
+  .voteDateCard {
+    padding-right: 0.9rem;
+  }
+
+  .voteDateInfo strong {
+    font-size: 0.95rem;
+  }
+
+  .voteDateInfo span {
+    font-size: 0.78rem;
+  }
+
+  .candidateArchFrame {
+    width: 230px;
+    height: 300px;
+    border-radius: 115px 115px 20px 20px;
+  }
+
+  .candidateLargeImg {
+    transform: scale(1.3) translateY(4px);
+  }
+
+  .candidateFloatingCard {
+    padding: 0.4rem 0.8rem;
+    gap: 0.5rem;
+  }
+
+  .candidateBadgeTag {
+    display: none;
+  }
 }

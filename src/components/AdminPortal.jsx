@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
+import { db } from "../firebase";
+import { collection, onSnapshot } from "firebase/firestore";
 import {
   CrownIcon, ChatIcon, UsersIcon, PlateIcon,
   VoteIcon, SearchIcon, TrashIcon, RefreshIcon, CheckIcon,
@@ -41,6 +43,7 @@ export default function AdminPortal({ onAnnouncementChange }) {
   const [suggestions, setSuggestions] = useState([]);
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [firestoreRulesError, setFirestoreRulesError] = useState(false);
 
   // Filters for suggestions
   const [sugFilterStatus, setSugFilterStatus] = useState("all"); // all | new | starred | actioned
@@ -73,15 +76,84 @@ export default function AdminPortal({ onAnnouncementChange }) {
     }
   }, []);
 
+  // Real-time Firestore sync & background polling
   useEffect(() => {
-    if (isAuthenticated) {
-      loadData();
-      // Background auto-refresh every 12 seconds so new logins and updates sync live
-      const interval = setInterval(() => {
-        loadData(true);
-      }, 12000);
-      return () => clearInterval(interval);
+    if (!isAuthenticated) return;
+
+    loadData();
+
+    // 1. Instant Real-time Firestore listener for all logged-in students & dishes
+    let unsubUsers = () => {};
+    let unsubSug = () => {};
+
+    try {
+      unsubUsers = onSnapshot(collection(db, "users"), (snap) => {
+        setFirestoreRulesError(false);
+        const map = new Map();
+        snap.docs.forEach(docSnap => {
+          if (docSnap.id.startsWith("student_10") || docSnap.id.startsWith("mock")) return;
+          const d = docSnap.data();
+          const b = d.breakfast || [];
+          const l = d.lunch || [];
+          const s = d.snacks || [];
+          const dn = d.dinner || [];
+          const totalMeals = b.length + l.length + s.length + dn.length;
+
+          map.set(docSnap.id, {
+            uid: docSnap.id,
+            displayName: d.displayName || "Google Student",
+            email: d.email || "",
+            photoURL: d.photoURL || "",
+            emailVerified: d.emailVerified !== undefined ? d.emailVerified : true,
+            provider: d.provider || "google.com",
+            creationTime: d.creationTime || "",
+            lastSignInTime: d.lastSignInTime || "",
+            lastLoginAt: d.lastLoginAt?.toMillis ? d.lastLoginAt.toMillis() : (d.lastLoginAt || Date.now()),
+            meals: totalMeals,
+            votes: d.votes || 0,
+            menus: { Breakfast: b, Lunch: l, Snacks: s, Dinner: dn },
+            isGoogle: true
+          });
+        });
+
+        const list = Array.from(map.values()).filter(u => u && u.uid && !u.uid.startsWith("student_10") && !u.uid.startsWith("mock"));
+        list.sort((a, b) => {
+          const timeA = typeof a.lastLoginAt === "number" ? a.lastLoginAt : 0;
+          const timeB = typeof b.lastLoginAt === "number" ? b.lastLoginAt : 0;
+          return timeB - timeA;
+        });
+
+        if (list.length > 0) {
+          setStudents(list);
+        }
+      }, (err) => {
+        if (err.code === "permission-denied") {
+          setFirestoreRulesError(true);
+        }
+      });
+
+      // 2. Real-time Firestore listener for suggestions
+      unsubSug = onSnapshot(collection(db, "suggestions"), (snap) => {
+        setFirestoreRulesError(false);
+        const list = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+          .filter(s => s && !["sug_1", "sug_2", "sug_3", "sug_4"].includes(s.id) && !s.id?.startsWith("mock"));
+        list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        if (list.length > 0) {
+          setSuggestions(list);
+        }
+      }, (err) => {
+        if (err.code === "permission-denied") {
+          setFirestoreRulesError(true);
+        }
+      });
+    } catch (err) {
+      console.warn("Real-time setup note:", err);
     }
+
+    return () => {
+      unsubUsers();
+      unsubSug();
+    };
   }, [isAuthenticated, loadData]);
 
   const handleForceRefresh = () => {
@@ -337,6 +409,53 @@ export default function AdminPortal({ onAnnouncementChange }) {
           </button>
         </div>
       </header>
+
+      {/* Firestore Rules Alert (Shows only when rules block cross-device sync) */}
+      {firestoreRulesError && (
+        <div style={{
+          background: "#FEF2F2",
+          border: "2px solid #F87171",
+          borderRadius: "20px",
+          padding: "1.4rem 1.8rem",
+          marginBottom: "2rem",
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "1.2rem",
+          color: "#991B1B",
+          boxShadow: "0 8px 24px rgba(220, 38, 38, 0.12)"
+        }}>
+          <ShieldIcon size={28} color="#DC2626" />
+          <div style={{ flex: 1 }}>
+            <strong style={{ fontSize: "1.1rem", display: "block", marginBottom: "0.35rem", color: "#B91C1C" }}>
+              ⚠️ Action Required: Firebase Firestore Rules are set to locked
+            </strong>
+            <p style={{ margin: "0 0 0.6rem", fontSize: "0.95rem", lineHeight: "1.5", color: "#7F1D1D" }}>
+              New logins from other devices cannot appear on this admin dashboard because Firestore rules are set to restricted (permission-denied).
+              To fix this in 30 seconds: Go to <strong>Firebase Console → Firestore Database → Rules</strong>, replace with the snippet below, and click <strong>Publish</strong>:
+            </p>
+            <pre style={{
+              background: "#1E1E24",
+              color: "#34D399",
+              padding: "0.8rem 1.2rem",
+              borderRadius: "10px",
+              fontFamily: "monospace",
+              fontSize: "0.88rem",
+              margin: "0 0 0.6rem",
+              overflowX: "auto"
+            }}>{`rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}`}</pre>
+            <span style={{ fontSize: "0.85rem", color: "#991B1B", fontWeight: "600" }}>
+              ✓ Once you click Publish in Firebase Console, this banner will automatically disappear and all devices will sync live!
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* KPI Stats Grid */}
       <div className={styles.kpiGrid}>

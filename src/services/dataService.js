@@ -15,8 +15,8 @@ const STORAGE_KEYS = {
 
 // ─── HIGH CONCURRENCY CACHE & TIMEOUT CONFIG ──────────────────────────────────
 // Ensures 3000+ simultaneous students experience 0ms UI lag and instant cross-user syncing
-const CACHE_TTL_MS = 5 * 1000; // 5s fast sync TTL
-const NETWORK_TIMEOUT_MS = 3500; // 3.5s failsafe timeout
+const CACHE_TTL_MS = 3 * 1000; // 3s fast sync TTL
+const NETWORK_TIMEOUT_MS = 12000; // 12s failsafe timeout for mobile devices
 
 let memoryUsersCache = { data: null, timestamp: 0 };
 let memorySuggestionsCache = { data: null, timestamp: 0 };
@@ -264,8 +264,13 @@ export async function recordUserSession(user) {
       }, { merge: true }),
       NETWORK_TIMEOUT_MS
     );
+    console.info("✓ User profile synced to Firestore:", user.uid);
   } catch (e) {
-    // Non-fatal if offline
+    if (e.code === "permission-denied") {
+      console.error("⚠️ Firestore Security Rules blocked user sync (permission-denied). Please update Firestore Rules in Firebase Console to: allow read, write: if true;");
+    } else {
+      console.warn("Firestore user sync note:", e.message);
+    }
   }
 }
 

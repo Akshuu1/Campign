@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
+import { db } from "../firebase";
+import { collection, onSnapshot } from "firebase/firestore";
 import {
   TrophyIcon, PlateIcon, VoteIcon, StarIcon, SearchIcon, SparkleIcon
 } from "./icons/Icons";
@@ -39,14 +41,18 @@ export default function Leaderboard() {
 
   useEffect(() => {
     loadLeaderboard();
-  }, [loadLeaderboard]);
 
-  // Periodic background live sync every 10s so dishes and votes stay updated
-  useEffect(() => {
-    const timer = setInterval(() => {
-      loadLeaderboard(true);
-    }, 10000);
-    return () => clearInterval(timer);
+    // Instant real-time update when any student adds dishes, votes, or registers
+    let unsub = () => {};
+    try {
+      unsub = onSnapshot(collection(db, "users"), () => {
+        loadLeaderboard(true);
+      }, (err) => {
+        console.warn("Leaderboard snapshot notice:", err.message);
+      });
+    } catch (e) {}
+
+    return () => unsub();
   }, [loadLeaderboard]);
 
   useEffect(() => {
