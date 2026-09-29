@@ -11,14 +11,13 @@ import {
   ChatIcon, SparkleIcon
 } from "./components/icons/Icons";
 import { getCampaignAnnouncement } from "./services/dataService";
-
 import { verifyAdminEmail } from "./utils/security";
 
 const AdminPortal = React.lazy(() => import("./components/AdminPortal"));
 
 const BASE_TABS = [
   { id: "campaign", label: "Why to Vote Me", Icon: VoteIcon },
-  { id: "planner", label: "My Meals", Icon: PlateIcon },
+  { id: "planner", label: "Add your Meal", Icon: PlateIcon },
   { id: "leaderboard", label: "Leaderboard", Icon: TrophyIcon, highlight: true },
   { id: "suggestions", label: "Suggestions", Icon: ChatIcon },
 ];
@@ -70,12 +69,85 @@ export default function App() {
     }
   }, [user, showLoginModal, isCurrentUserAdmin, activeTab]);
 
+  // ── Auth loading splash ──
+  if (user === undefined) {
+    return (
+      <div className={styles.authSplash}>
+        <WatermelonIcon size={54} />
+        <p className={styles.authSplashText}>Loading…</p>
+      </div>
+    );
+  }
+
+  // ── NOT signed in → full-screen login gate ──
+  if (user === null) {
+    return (
+      <div className={styles.loginGate}>
+        {/* Animated background blobs */}
+        <div className={styles.gateBlob1} />
+        <div className={styles.gateBlob2} />
+        <div className={styles.gateBlob3} />
+
+        <div className={styles.gateInner}>
+          {/* Left: branding + copy */}
+          <div className={styles.gateLeft}>
+            <div className={styles.gateLogoRow}>
+              <WatermelonIcon size={44} />
+              <div>
+                <h1 className={styles.gateTitle}>Create Your Own Meal</h1>
+                <p className={styles.gateSub}>by <strong>Akshat</strong></p>
+              </div>
+            </div>
+
+            <div className={styles.gateHeadline}>
+              <span className={styles.gateHeadlineBadge}>
+                <VoteIcon size={14} color="white" /> Vote 5 Oct
+              </span>
+              <h2 className={styles.gateH2}>
+                The campus mess,<br />
+                <span className={styles.gateAccent}>reimagined by you.</span>
+              </h2>
+              <p className={styles.gateDesc}>
+                Design your daily thali, vote on the leaderboard, and send direct suggestions
+                to <strong>me</strong> — all in one place. Sign in to get started.
+              </p>
+            </div>
+
+            <div className={styles.gateFeatures}>
+              {[
+                { Icon: PlateIcon,   color: "#FF3366", label: "Design Custom Meals" },
+                { Icon: TrophyIcon,  color: "#FB8500", label: "Campus Leaderboard"  },
+                { Icon: ChatIcon,    color: "#00CC99", label: "Direct Suggestions"  },
+              ].map(({ Icon, color, label }) => (
+                <div key={label} className={styles.gateFeatureItem}>
+                  <div className={styles.gateFeatureIcon}>
+                    <Icon size={18} color={color} />
+                  </div>
+                  <span>{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: login card */}
+          <div className={styles.gateRight}>
+            <LoginScreen />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Signed in → full app ──
   return (
     <div className={styles.appRoot}>
       {/* Dynamic Top Banner */}
       <div className={styles.banner}>
         <div className={styles.bannerTrack}>
-          <span>{bannerText}</span>
+
+          <span className={styles.bannerText}>
+            Voting opens on <strong>5th October</strong> · Support &amp; Vote for <strong>Akshat Agrawal</strong>!
+          </span>
         </div>
       </div>
 
@@ -90,7 +162,6 @@ export default function App() {
         </div>
 
         <div className={styles.headerRight}>
-          {/* Quick Admin Shortcut Button ONLY visible to Akshat */}
           {isCurrentUserAdmin && (
             <button
               className={`${styles.adminHeaderBtn} ${activeTab === "admin" ? styles.adminHeaderBtnActive : ""}`}
@@ -103,42 +174,28 @@ export default function App() {
             </button>
           )}
 
-          {user ? (
-            <>
-              <div className={styles.userPill}>
-                {user.photoURL ? (
-                  <img
-                    src={user.photoURL}
-                    alt={user.displayName}
-                    className={styles.avatar}
-                    referrerPolicy="no-referrer"
-                  />
-                ) : (
-                  <div className={styles.userInitial}>
-                    {user.displayName?.charAt(0).toUpperCase() || "S"}
-                  </div>
-                )}
-                <span className={styles.userName}>{user.displayName?.split(" ")[0]}</span>
+          <div className={styles.userPill}>
+            {user.photoURL ? (
+              <img
+                src={user.photoURL}
+                alt={user.displayName}
+                className={styles.avatar}
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <div className={styles.userInitial}>
+                {user.displayName?.charAt(0).toUpperCase() || "S"}
               </div>
-              <button className={styles.signOutBtn} onClick={signOut}>Sign out</button>
-            </>
-          ) : (
-            <button
-              className={styles.signInHighlightBtn}
-              onClick={() => setShowLoginModal(true)}
-              title="Sign in to customize meals"
-            >
-              <SparkleIcon size={15} color="white" />
-              <span>Sign in</span>
-              <span className={styles.signInPulseDot} />
-            </button>
-          )}
+            )}
+            <span className={styles.userName}>{user.displayName?.split(" ")[0]}</span>
+          </div>
+          <button className={styles.signOutBtn} onClick={signOut}>Sign out</button>
         </div>
       </header>
 
       {/* Nav */}
       <nav className={styles.nav}>
-        {visibleTabs.map(({ id, label, Icon, highlight, adminPill }) => (
+        {allTabs.map(({ id, label, Icon, highlight, adminPill }) => (
           <button
             key={id}
             className={`${styles.navTab}
@@ -150,12 +207,9 @@ export default function App() {
             <Icon
               size={16}
               color={
-                activeTab === id
-                  ? "white"
-                  : adminPill
-                  ? "#FB8500"
-                  : highlight
-                  ? "#10B981"
+                activeTab === id ? "white"
+                  : adminPill ? "#FB8500"
+                  : highlight ? "#10B981"
                   : "#8E8273"
               }
             />
@@ -167,37 +221,22 @@ export default function App() {
 
       {/* Content */}
       <main className={styles.main}>
-        {activeTab === "campaign"    && (
+        {activeTab === "campaign" && (
           <CampaignPage
-            onNavigateToSuggestions={() => {
-              if (user) {
-                setActiveTab("suggestions");
-              } else {
-                setShowLoginModal(true);
-              }
-            }}
+            onNavigateToSuggestions={() => setActiveTab("suggestions")}
           />
         )}
-        {activeTab === "suggestions" && user && (
+        {activeTab === "suggestions" && (
           <SuggestionsPage onBackToCampaign={() => setActiveTab("campaign")} />
         )}
-        {activeTab === "planner"     && (user ? <MealPlanner /> : <LoginScreen onClose={() => setShowLoginModal(false)} />)}
+        {activeTab === "planner" && <MealPlanner />}
         {activeTab === "leaderboard" && <Leaderboard />}
-        {activeTab === "admin"       && isCurrentUserAdmin && (
+        {activeTab === "admin" && isCurrentUserAdmin && (
           <React.Suspense fallback={<div style={{ textAlign: "center", padding: "4rem", color: "#8E8273", fontWeight: 800 }}>Loading Command Center...</div>}>
             <AdminPortal onAnnouncementChange={setBannerText} />
           </React.Suspense>
         )}
       </main>
-
-      {/* Instant Login Modal */}
-      {showLoginModal && !user && (
-        <div className={styles.loginModalOverlay} onClick={() => setShowLoginModal(false)}>
-          <div className={styles.loginModalContent} onClick={(e) => e.stopPropagation()}>
-            <LoginScreen onClose={() => setShowLoginModal(false)} />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

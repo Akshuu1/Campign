@@ -11,18 +11,18 @@ const INSTAGRAM_HANDLE = "@akshat_agrawal.14";
 
 const PROMISES = [
   { Icon: ForkKnifeIcon, color: "#FB8500", title: "Better Menu, Better Variety",      desc: "More variety, less repetition. Italian dishes, Chole Bhature, and the food YOU actually want on the menu." },
-  { Icon: TrophyIcon,    color: "#FFAA00", title: "He Listens to YOU",                desc: "Every meal request matters. Direct line to the mess contractor and kitchen staff — no more shouting into the void." },
-  { Icon: PlateIcon,     color: "#FF5A5F", title: "Quick Resolution",                 desc: "Cold food? Long queues? Strict resolution time for student mess complaints — not next week, NOW." },
-  { Icon: VoteIcon,      color: "#10B981", title: "Quality You Can Taste",            desc: "Address recurring quality issues and ensure food is prepared fresh, served hot, and stored hygienically." },
-  { Icon: ForkKnifeIcon, color: "#FFAA00", title: "A Menu Students Actually Want",    desc: "Replace unpopular items like lauki, torai, and gatte with crowd favourites — voted by YOU." },
-  { Icon: PlateIcon,     color: "#FB8500", title: "Reduce Outside Ordering",          desc: "When the mess is good, you stop spending extra money on outside food. Simple promise, real savings." },
+  { Icon: TrophyIcon,    color: "#FFAA00", title: "I Listen to YOU",                  desc: "Every meal request matters to me. I'll maintain a direct line with the mess contractor and kitchen staff — no more shouting into the void." },
+  { Icon: PlateIcon,     color: "#FF5A5F", title: "Quick Resolution",                 desc: "Cold food? Long queues? I promise a strict resolution time for your mess complaints — not next week, NOW." },
+  { Icon: VoteIcon,      color: "#10B981", title: "Quality You Can Taste",            desc: "I will tackle recurring quality issues and ensure our food is prepared fresh, served hot, and stored hygienically." },
+  { Icon: ForkKnifeIcon, color: "#FFAA00", title: "A Menu Students Actually Want",    desc: "I will work to replace unpopular items like lauki, torai, and gatte with crowd favourites — voted by YOU." },
+  { Icon: PlateIcon,     color: "#FB8500", title: "Reduce Outside Ordering",          desc: "When our mess is good, you stop spending your pocket money on outside food. My simple promise, your real savings." },
 ];
 
 const WHY_AKSHAT = [
-  { emoji: "🎯", title: "Student-First Thinking",   desc: "Built this entire digital platform just to hear what you want to eat. That's not a candidate — that's a Rep who already works for you." },
-  { emoji: "📢", title: "Speaks Your Language",      desc: "Not just another hostel politician. Akshat understands mess life because he lives it every single day, just like you." },
-  { emoji: "⚡", title: "Already Taking Action",     desc: "The meal planner, leaderboard, and suggestion box are live right now. Akshat didn't wait to win — he started working from day one." },
-  { emoji: "🤝", title: "Accountable & Transparent", desc: "Every suggestion you submit is tracked and reviewed. No empty promises — he shows his work." },
+  { emoji: "🎯", title: "Student-First Thinking",   desc: "I built this entire digital platform just to hear what you want to eat. I'm not waiting to be elected — I'm already working for you." },
+  { emoji: "📢", title: "I Speak Your Language",     desc: "I'm not another hostel politician. I understand mess life because I eat here every single day, right beside you." },
+  { emoji: "⚡", title: "I've Already Taken Action", desc: "The meal planner, leaderboard, and suggestion box are live right now. I didn't wait to win — I started working from day one." },
+  { emoji: "🤝", title: "Accountable & Transparent", desc: "Every suggestion you submit is tracked and personally reviewed by me. No empty promises — I show my work." },
 ];
 
 // Live countdown hook
@@ -152,7 +152,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
           </h2>
           <p className={styles.heroDesc}>
             3rd year. Same mess. Time for better choices.<br />
-            Better quality. More variety. Fewer repeats. A menu shaped by students — <strong>your vote for Akshat</strong>.
+            Better quality. More variety. Fewer repeats. Let's shape this menu together — <strong>vote for me, Akshat</strong>.
           </p>
 
           {/* Social proof pill */}
@@ -225,10 +225,10 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
         <div className={styles.igCtaLeft}>
           <span className={styles.igCtaIcon}>📸</span>
           <div>
-            <h3 className={styles.igCtaTitle}>Follow <strong>Akshat</strong> on Instagram</h3>
+            <h3 className={styles.igCtaTitle}>Connect with Me on Instagram</h3>
             <p className={styles.igCtaSub}>
-              Stay updated on campaign news, mess updates, and behind-the-scenes content.
-              DM for any queries — he responds personally.
+              Stay updated on my campaign progress, mess updates, and behind-the-scenes work.
+              DM me anytime — I respond personally to every student.
             </p>
             <span className={styles.igHandle}>{INSTAGRAM_HANDLE}</span>
           </div>
@@ -243,7 +243,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
           {igClicked ? "✓ Profile Opened!" : (
             <>
               <span className={styles.igGradIcon}>IG</span>
-              Follow on Instagram
+              Follow Me on Instagram
             </>
           )}
         </a>
@@ -251,7 +251,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
 
       {/* ── Why Akshat? ── */}
       <div className={styles.whySection}>
-        <h3 className={styles.sectionTitle}>Why <strong>Akshat</strong>?</h3>
+        <h3 className={styles.sectionTitle}>Why Vote for <strong>Me</strong>?</h3>
         <div className={styles.whyGrid}>
           {WHY_AKSHAT.map(({ emoji, title, desc }) => (
             <div key={title} className={styles.whyCard}>
@@ -265,7 +265,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
 
       {/* ── Promises ── */}
       <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>What <strong>Akshat</strong> Promises You</h3>
+        <h3 className={styles.sectionTitle}>What <strong>I Promise You</strong></h3>
         <div className={styles.promisesGrid}>
           {PROMISES.map(({ Icon, color, title, desc }) => (
             <div key={title} className={styles.promiseCard} style={{ "--accent": color }}>
@@ -282,12 +282,12 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
       {/* ── Manifesto CTA ── */}
       <div className={styles.manifestoCard}>
         <div className={styles.manifestoLeft}>
-          <span className={styles.manifestoBadge}>✊ THE AKSHAT PLEDGE</span>
+          <span className={styles.manifestoBadge}>✊ MY PERSONAL PLEDGE</span>
           <h3 className={styles.manifestoTitle}>
             "Every student deserves a mess that respects their taste, health, and money."
           </h3>
           <p className={styles.manifestoSub}>
-            — <strong>Akshat</strong>, Mess Representative Candidate 2026
+            — <strong>Akshat</strong>, Your Mess Representative Candidate 2026
           </p>
         </div>
         <div className={styles.manifestoRight}>
@@ -297,7 +297,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
           </div>
           <div className={styles.manifestoStat}>
             <span className={styles.manifestoStatNum}>1</span>
-            <span className={styles.manifestoStatLbl}>Candidate Who Already Started</span>
+            <span className={styles.manifestoStatLbl}>Candidate Already Working For You</span>
           </div>
         </div>
       </div>
@@ -306,11 +306,11 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
       <div className={styles.howCard}>
         <VoteIcon size={48} color="#10B981" />
         <div className={styles.howText}>
-          <h3>How to Cast Your Vote?</h3>
+          <h3>How to Vote for Me?</h3>
           <p>
             Voting happens <strong>offline on 5th October</strong>. Visit your designated hostel or
-            college mess voting counter and stamp your vote for <strong>Akshat</strong>.
-            It takes 30 seconds and changes the mess for an entire year.
+            college mess voting counter and cast your vote for <strong>Akshat</strong>.
+            It takes just 30 seconds, and together we can transform our mess for the entire year.
           </p>
           <div className={styles.howBtnRow}>
             <button className={styles.shareBtn} onClick={handleShare}>
@@ -332,11 +332,11 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
             <span>VOICE YOUR OPINION</span>
           </div>
           <h3 className={styles.suggestInviteTitle}>
-            Have an idea to improve the mess menu? 💬
+            Tell me what needs to change in our mess! 💬
           </h3>
           <p className={styles.suggestInviteSub}>
             Whether it's better paneer curries, fresh morning fruit bowls, or extended exam milk
-            timings — submit your suggestion privately to <strong>Akshat</strong>. He reads every single one.
+            timings — submit your suggestion directly to me. I read and record every single one.
           </p>
         </div>
         <button
@@ -344,12 +344,12 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
           onClick={onNavigateToSuggestions}
         >
           <SparkleIcon size={16} color="white" />
-          <span>Submit Your Suggestion →</span>
+          <span>Send Me Your Suggestion →</span>
         </button>
       </div>
 
       <p className={styles.footer}>
-        Made by <strong>Akshat</strong> — Your Mess Representative Candidate · Offline Voting on <strong>5th October</strong>
+        Built by <strong>Akshat</strong> — Your Mess Representative Candidate · Offline Voting on <strong>5th October</strong>
         {" · "}
         <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className={styles.footerIg}>
           {INSTAGRAM_HANDLE}

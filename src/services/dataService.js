@@ -613,9 +613,9 @@ export async function castVoteForStudent(targetUid, currentUid) {
 export function getCampaignAnnouncement() {
   try {
     const custom = localStorage.getItem(STORAGE_KEYS.ANNOUNCEMENT);
-    if (custom) return custom;
+    if (custom && !custom.includes("⚡")) return custom;
   } catch (e) {}
-  return "⚡ Voting opens on 5th October! Don't forget to vote for Akshat";
+  return "Voting opens on 5th October · Cast your vote for Akshat";
 }
 
 export function saveCampaignAnnouncement(text) {

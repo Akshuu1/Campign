@@ -81,11 +81,11 @@ export default function SuggestionsPage({ onBackToCampaign }) {
             <div className={styles.suggestTopBadges}>
               <span className={styles.directPill}>
                 <ChatIcon size={14} color="#C2410C" />
-                DIRECT LINE TO CANDIDATE
+                DIRECT LINE TO ME
               </span>
               <span className={styles.privatePill}>
                 <ShieldIcon size={14} color="#059669" />
-                100% Confidential to Akshat
+                100% Confidential
               </span>
             </div>
 
@@ -103,10 +103,10 @@ export default function SuggestionsPage({ onBackToCampaign }) {
 
           <div className={styles.suggestIntro}>
             <h2 className={styles.suggestMainTitle}>
-              Submit a Suggestion to <span className={styles.titleGradient}>Akshat</span> 💬
+              Send a Suggestion to <span className={styles.titleGradient}>Me</span> 💬
             </h2>
             <p className={styles.suggestSubtitle}>
-              Have an idea for new dishes, timing changes, or kitchen hygiene? Speak up! Every word is delivered <strong>privately</strong> into Akshat's Mess Committee Dossier.
+              Have an idea for new dishes, timing changes, or kitchen hygiene? Speak up! Every word is delivered <strong>privately</strong> straight to me.
             </p>
           </div>
 
@@ -115,9 +115,9 @@ export default function SuggestionsPage({ onBackToCampaign }) {
               <div className={styles.successCheckIconWrap}>
                 <CheckIcon size={32} color="white" />
               </div>
-              <h3 className={styles.successTitle}>Suggestion Privately Delivered! 🎉</h3>
+              <h3 className={styles.successTitle}>Suggestion Received! 🎉</h3>
               <p className={styles.successDesc}>
-                Thank you for speaking up! Akshat will personally review your feedback in his private Admin Command Center and bring it to the Mess Committee table.
+                Thank you for speaking up! I will personally review your feedback and bring it straight to the Mess Committee table.
               </p>
               <div className={styles.successActions}>
                 <button
@@ -133,7 +133,7 @@ export default function SuggestionsPage({ onBackToCampaign }) {
                     className={styles.returnCampaignBtn}
                     onClick={onBackToCampaign}
                   >
-                    View Akshat's Campaign →
+                    View My Campaign →
                   </button>
                 )}
               </div>
@@ -217,7 +217,7 @@ export default function SuggestionsPage({ onBackToCampaign }) {
                 </div>
                 <textarea
                   className={styles.styledTextarea}
-                  placeholder="Tell Akshat: What specific dishes do you miss? Are rotis soft? Any timing or quantity issues? Share your honest thoughts..."
+                  placeholder="Tell me: What specific dishes do you miss? Are rotis soft? Any timing or quantity issues? Share your honest thoughts..."
                   value={suggestion}
                   maxLength={500}
                   onChange={(e) => setSuggestion(e.target.value)}
@@ -235,7 +235,7 @@ export default function SuggestionsPage({ onBackToCampaign }) {
                   <div>
                     <strong className={styles.trustTitle}>Private Submission Guarantee</strong>
                     <span className={styles.trustSub}>
-                      Your suggestion is never displayed publicly. Only Akshat can read it.
+                      Your suggestion is never displayed publicly. Only I can read it.
                     </span>
                   </div>
                 </div>
@@ -245,7 +245,7 @@ export default function SuggestionsPage({ onBackToCampaign }) {
                   className={styles.sendSuggestionBtn}
                   disabled={isSubmitting || !suggestion.trim()}
                 >
-                  <span>{isSubmitting ? "Delivering..." : "Submit Privately to Akshat"}</span>
+                  <span>{isSubmitting ? "Delivering..." : "Submit Privately to Me"}</span>
                   <span className={styles.btnArrow}>→</span>
                 </button>
               </div>

@@ -73,12 +73,6 @@ export default function LoginScreen({ onClose }) {
           </button>
         )}
 
-        {/* Campaign pill */}
-        <div className={styles.campaignPill}>
-          <VoteIcon size={15} color="white" />
-          <span>Mess Representative Candidate · Oct 5 Offline Voting</span>
-        </div>
-
         {/* Logo and Headings */}
         <div className={styles.logoArea}>
           <div className={styles.watermelonWrap}>
@@ -89,7 +83,7 @@ export default function LoginScreen({ onClose }) {
             Create Your <span className={styles.titleGradient}>Own Meal</span>
           </h1>
           <p className={styles.subtitle}>
-            Sign in with your student Google account to curate your daily thali &amp; help Akshat upgrade the campus mess.
+            Sign in with your student Google account to curate your daily thali &amp; help upgrade the campus mess.
           </p>
         </div>
 
@@ -164,7 +158,7 @@ export default function LoginScreen({ onClose }) {
         {/* Trust & Privacy Note */}
         <div className={styles.trustNote}>
           <ShieldIcon size={13} color="#059669" />
-          <span>Fast, 1-click sign in · Recommended @nst.rishihood.edu.in</span>
+          <span>Fast, 1-click sign in · Use Rishihood Mail ID</span>
         </div>
       </div>
     </div>
