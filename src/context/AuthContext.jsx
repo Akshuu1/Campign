@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth, provider, db } from "../firebase";
-import { signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from "firebase/auth";
+import { signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged, getAdditionalUserInfo, deleteUser } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { recordUserSession } from "../services/dataService";
 
@@ -44,20 +44,16 @@ export function AuthProvider({ children }) {
         email.toLowerCase().endsWith(`.${ALLOWED_DOMAIN}`);
 
       if (!isRishihoodEmail) {
-        // ── Existing-user bypass: check if this uid already has data in Firestore ──
-        // This ensures zero disruption to users who signed up before the email restriction.
-        let existsInDB = false;
-        try {
-          const snap = await getDoc(doc(db, "users", uid));
-          existsInDB = snap.exists();
-        } catch (e) {
-          // Firestore unreachable – fail safe: block the new user
-          existsInDB = false;
-        }
+        const additionalInfo = getAdditionalUserInfo(res);
+        const isNewUser = additionalInfo?.isNewUser;
 
-        if (!existsInDB) {
-          // Brand-new user with a non-Rishihood email → block immediately
-          await firebaseSignOut(auth);
+        if (isNewUser) {
+          // Brand-new user with a non-Rishihood email → block immediately and delete their Auth record
+          try {
+            await deleteUser(res.user);
+          } catch (e) {
+            await firebaseSignOut(auth);
+          }
           const err = new Error(
             `Only Rishihood email IDs (ending in .${ALLOWED_DOMAIN}) are allowed.`
           );
