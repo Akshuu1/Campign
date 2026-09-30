@@ -73,7 +73,6 @@
   border-radius: 50%;
   filter: blur(80px);
   pointer-events: none;
-  animation: blobFloat 10s ease-in-out infinite alternate;
 }
 
 .gateBlob1 {
@@ -333,8 +332,8 @@
 /* Floating Glass Header */
 .header {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 2px solid white;
   padding: 1.1rem 2.5rem;
   display: flex;
@@ -521,8 +520,9 @@
 
 /* Playful Navigation */
 .nav {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 2px solid white;
   padding: 0.9rem 2.5rem;
   display: flex;

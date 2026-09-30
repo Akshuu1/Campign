@@ -34,15 +34,10 @@ body {
   color: var(--text-main);
   background-color: var(--bg-main);
   background-image: 
-    radial-gradient(circle at 15% 50%, rgba(255, 153, 0, 0.15), transparent 35%),
-    radial-gradient(circle at 85% 30%, rgba(255, 51, 102, 0.12), transparent 40%),
-    radial-gradient(circle at 50% 90%, rgba(0, 204, 153, 0.1), transparent 40%);
-  background-size: 150% 150%;
-  animation: bgMesh 15s ease infinite alternate;
-}
-@keyframes bgMesh {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 100% 100%; }
+    radial-gradient(circle at 15% 50%, rgba(255, 153, 0, 0.12), transparent 35%),
+    radial-gradient(circle at 85% 30%, rgba(255, 51, 102, 0.1), transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(0, 204, 153, 0.08), transparent 40%);
+  background-attachment: fixed;
 }
 
 h1, h2, h3, h4 { margin: 0; font-weight: 800; letter-spacing: -0.03em; }

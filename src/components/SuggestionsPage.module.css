@@ -129,9 +129,16 @@
 
 .categoryPillsWrap {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.45rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.categoryPillsWrap::-webkit-scrollbar {
+  display: none;
+}
+
 
 .catPillBtn {
   display: inline-flex;
@@ -147,6 +154,8 @@
   cursor: pointer;
   transition: all 0.15s ease;
   font-family: inherit;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .catPillBtn:hover {
@@ -223,6 +232,8 @@
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: inherit;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .catPillBtn:hover {

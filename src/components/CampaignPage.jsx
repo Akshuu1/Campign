@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   VoteIcon, ShareIcon, TrophyIcon, ForkKnifeIcon, PlateIcon,
-  ChatIcon, SparkleIcon
+  ChatIcon, SparkleIcon, MegaphoneIcon, ShieldIcon, UsersIcon
 } from "./icons/Icons";
 import akshatPhoto from "../assets/hero_nobg.png";
 import styles from "./CampaignPage.module.css";
@@ -19,10 +19,10 @@ const PROMISES = [
 ];
 
 const WHY_AKSHAT = [
-  { emoji: "🎯", title: "Student-First Thinking",   desc: "Built this entire digital platform just to hear what you want to eat. That's not a candidate — that's a Rep who already works for you." },
-  { emoji: "📢", title: "Speaks Your Language",      desc: "Not just another hostel politician. Akshat understands mess life because he lives it every single day, just like you." },
-  { emoji: "⚡", title: "Already Taking Action",     desc: "The meal planner, leaderboard, and suggestion box are live right now. Akshat didn't wait to win — he started working from day one." },
-  { emoji: "🤝", title: "Accountable & Transparent", desc: "Every suggestion you submit is tracked and reviewed. No empty promises — he shows his work." },
+  { Icon: UsersIcon, color: "#FF3366", title: "Student-First Thinking",   desc: "Built this entire digital platform just to hear what you want to eat. That's not a candidate — that's a Rep who already works for you." },
+  { Icon: MegaphoneIcon, color: "#FB8500", title: "Speaks Your Language",      desc: "Not just another hostel politician. Akshat understands mess life because he lives it every single day, just like you." },
+  { Icon: SparkleIcon, color: "#F9B84A", title: "Already Taking Action",     desc: "The meal planner, leaderboard, and suggestion box are live right now. Akshat didn't wait to win — he started working from day one." },
+  { Icon: ShieldIcon, color: "#4CAF82", title: "Accountable & Transparent", desc: "Every suggestion you submit is tracked and reviewed. No empty promises — he shows his work." },
 ];
 
 // Live countdown hook
@@ -61,7 +61,6 @@ function CountUp({ target, duration = 1500 }) {
   return <>{val}</>;
 }
 
-// Floating particle background
 function ParticleField() {
   const particles = Array.from({ length: 18 }, (_, i) => ({
     id: i,
@@ -89,16 +88,47 @@ function ParticleField() {
   );
 }
 
+function useReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(styles.revealed);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+    const elements = document.querySelectorAll(`.${styles.reveal}`);
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 export default function CampaignPage({ onNavigateToSuggestions }) {
   const [shareCount, setShareCount] = useState(0);
   const [igClicked, setIgClicked] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const heroRef = useRef(null);
   const time = useCountdown("2026-10-05T08:00:00");
+  useReveal(); // Initialize scroll reveal
 
   useEffect(() => {
     setShareCount(247 + Math.floor(Math.random() * 30));
   }, []);
+
+  const handleMouseMove = (e) => {
+    const cards = document.querySelectorAll(`.${styles.spotlightCard}`);
+    for (const card of cards) {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty("--mouse-x", `${x}px`);
+      card.style.setProperty("--mouse-y", `${y}px`);
+    }
+  };
 
   // Show sticky vote bar after user scrolls past hero
   useEffect(() => {
@@ -127,7 +157,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
   const daysLeft = time.days;
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} onMouseMove={handleMouseMove}>
 
       {/* ── Sticky Vote Reminder Bar ── */}
       <div className={`${styles.stickyBar} ${showStickyBar ? styles.stickyBarVisible : ""}`}>
@@ -204,7 +234,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
       </div>
 
       {/* ── Live Stats Strip ── */}
-      <div className={styles.statsStrip}>
+      <div className={`${styles.statsStrip} ${styles.reveal}`}>
         {[
           { num: 247, suffix: "+", lbl: "Campaign Shares" },
           { num: 6,   suffix: "",  lbl: "Concrete Promises" },
@@ -221,7 +251,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
       </div>
 
       {/* ── Instagram CTA ── */}
-      <div className={styles.igCta}>
+      <div className={`${styles.igCta} ${styles.reveal}`}>
         <div className={styles.igCtaLeft}>
           <span className={styles.igCtaIcon}>📸</span>
           <div>
@@ -250,12 +280,14 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
       </div>
 
       {/* ── Why Akshat? ── */}
-      <div className={styles.whySection}>
+      <div className={`${styles.whySection} ${styles.reveal}`}>
         <h3 className={styles.sectionTitle}>Why <strong>Akshat</strong>?</h3>
         <div className={styles.whyGrid}>
-          {WHY_AKSHAT.map(({ emoji, title, desc }) => (
-            <div key={title} className={styles.whyCard}>
-              <span className={styles.whyEmoji}>{emoji}</span>
+          {WHY_AKSHAT.map(({ Icon, color, title, desc }) => (
+            <div key={title} className={`${styles.whyCard} ${styles.spotlightCard}`}>
+              <div className={styles.whyIconWrap}>
+                <Icon size={32} color={color} />
+              </div>
               <h4 className={styles.whyTitle}>{title}</h4>
               <p className={styles.whyDesc}>{desc}</p>
             </div>
@@ -264,11 +296,11 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
       </div>
 
       {/* ── Promises ── */}
-      <div className={styles.section}>
+      <div className={`${styles.section} ${styles.reveal}`}>
         <h3 className={styles.sectionTitle}>What <strong>Akshat</strong> Promises You</h3>
         <div className={styles.promisesGrid}>
           {PROMISES.map(({ Icon, color, title, desc }) => (
-            <div key={title} className={styles.promiseCard} style={{ "--accent": color }}>
+            <div key={title} className={`${styles.promiseCard} ${styles.spotlightCard}`} style={{ "--accent": color }}>
               <div className={styles.promiseIconWrap}>
                 <Icon size={26} color={color} />
               </div>
@@ -280,7 +312,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
       </div>
 
       {/* ── Manifesto CTA ── */}
-      <div className={styles.manifestoCard}>
+      <div className={`${styles.manifestoCard} ${styles.reveal}`}>
         <div className={styles.manifestoLeft}>
           <span className={styles.manifestoBadge}>✊ THE AKSHAT PLEDGE</span>
           <h3 className={styles.manifestoTitle}>
@@ -303,7 +335,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
       </div>
 
       {/* ── How to vote ── */}
-      <div className={styles.howCard}>
+      <div className={`${styles.howCard} ${styles.reveal}`}>
         <VoteIcon size={48} color="#10B981" />
         <div className={styles.howText}>
           <h3>How to Cast Your Vote?</h3>
@@ -325,7 +357,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
       </div>
 
       {/* ── Suggestion Invitation ── */}
-      <div className={styles.suggestInviteCard}>
+      <div className={`${styles.suggestInviteCard} ${styles.reveal}`}>
         <div className={styles.suggestInviteLeft}>
           <div className={styles.suggestInviteBadge}>
             <ChatIcon size={15} color="#C2410C" />
