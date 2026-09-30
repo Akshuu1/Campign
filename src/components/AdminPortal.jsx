@@ -897,7 +897,7 @@ service cloud.firestore {
                       </div>
                       {st.creationTime && (
                         <div className={styles.metaRowItemMuted}>
-                          <span>📅 Joined {new Date(st.creationTime).toLocaleDateString()}</span>
+                          <span>📅 Joined {new Date(st.creationTime).toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata' })}</span>
                         </div>
                       )}
                     </div>

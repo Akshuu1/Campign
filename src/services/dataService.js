@@ -342,7 +342,7 @@ export async function recordUserSession(user) {
     emailVerified: !!user.emailVerified,
     provider: user.providerData?.[0]?.providerId || "google.com",
     lastLoginAt: Date.now(),
-    lastSignInTime: user.metadata?.lastSignInTime || new Date().toLocaleString(),
+    lastSignInTime: user.metadata?.lastSignInTime ? new Date(user.metadata.lastSignInTime).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }) : new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }),
     creationTime: user.metadata?.creationTime || new Date().toISOString()
   };
 
@@ -500,9 +500,9 @@ export async function submitSuggestion(data) {
     starred: false,
     createdAt: Date.now(),
     timestamp:
-      new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) +
+      new Date().toLocaleTimeString('en-US', { hour: "2-digit", minute: "2-digit", timeZone: 'Asia/Kolkata' }) +
       ", " +
-      new Date().toLocaleDateString([], { month: "short", day: "numeric" })
+      new Date().toLocaleDateString('en-US', { month: "short", day: "numeric", timeZone: 'Asia/Kolkata' })
   };
 
   try {
