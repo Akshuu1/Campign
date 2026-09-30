@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
+import { createPortal } from "react-dom";
 import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase";
-import { collection, onSnapshot } from "firebase/firestore";
 import {
   TrophyIcon, PlateIcon, VoteIcon, StarIcon, SearchIcon, SparkleIcon
 } from "./icons/Icons";
-import { fetchLeaderboardEntries, castVoteForStudent } from "../services/dataService";
+import { subscribeToLeaderboard, castVoteForStudent } from "../services/dataService";
 import styles from "./Leaderboard.module.css";
 
 export default function Leaderboard() {
@@ -27,33 +26,15 @@ export default function Leaderboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterType, setFilterType] = useState("all"); // "all" | "topVoted" | "mostMeals"
 
-  const loadLeaderboard = useCallback(async (silent = false) => {
-    if (!silent) setLoading(true);
-    try {
-      const data = await fetchLeaderboardEntries(user);
-      setEntries(data);
-    } catch (err) {
-      console.warn("Leaderboard load err:", err);
-    } finally {
-      if (!silent) setLoading(false);
-    }
-  }, [user]);
-
   useEffect(() => {
-    loadLeaderboard();
-
-    // Instant real-time update when any student adds dishes, votes, or registers
-    let unsub = () => {};
-    try {
-      unsub = onSnapshot(collection(db, "users"), () => {
-        loadLeaderboard(true);
-      }, (err) => {
-        console.warn("Leaderboard snapshot notice:", err.message);
-      });
-    } catch (e) {}
-
-    return () => unsub();
-  }, [loadLeaderboard]);
+    setLoading(true);
+    // Shared subscription: all mounted Leaderboard instances share ONE Firestore listener
+    const unsub = subscribeToLeaderboard((data) => {
+      setEntries(data);
+      setLoading(false);
+    });
+    return unsub;
+  }, []);
 
   useEffect(() => {
     const voterKey = user?.uid || "guest";
@@ -75,21 +56,21 @@ export default function Leaderboard() {
     const voterKey = user?.uid || "guest";
     const nextVoted = [...votedUids, targetUid];
     setVotedUids(nextVoted);
-    try {
-      localStorage.setItem(`voted_list_${voterKey}`, JSON.stringify(nextVoted));
-      localStorage.setItem(`voted_${voterKey}`, targetUid);
-    } catch (e) {}
-
     await castVoteForStudent(targetUid, voterKey);
-    // Optimistically update entry list
-    setEntries(prev => prev.map(item => {
-      if (item.uid === targetUid) {
-        const nextVotes = (item.votes || 0) + 1;
-        return { ...item, votes: nextVotes, score: (item.meals * 2) + nextVotes };
-      }
-      return item;
-    }).sort((a, b) => b.score - a.score));
   };
+
+  // Lock body scroll + ESC to close when modal is open
+  useEffect(() => {
+    if (!selectedUser) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => { if (e.key === "Escape") setSelectedUser(null); };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [selectedUser]);
 
   const MEDAL_COLORS = ["#F9B84A", "#9EA3B0", "#CD7F50"];
   const [visibleLimit, setVisibleLimit] = useState(35);
@@ -285,8 +266,8 @@ export default function Leaderboard() {
         </div>
       </div>
 
-      {/* User Menu Modal */}
-      {selectedUser && (
+      {/* User Menu Modal — rendered via portal so it always centers on the VIEWPORT */}
+      {selectedUser && createPortal(
         <div className={styles.modalOverlay} onClick={() => setSelectedUser(null)}>
           <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
             <div className={styles.modalHeader}>
@@ -322,7 +303,8 @@ export default function Leaderboard() {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

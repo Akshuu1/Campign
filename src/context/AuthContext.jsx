@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { auth, provider } from "../firebase";
+import { auth, provider, db } from "../firebase";
 import { signInWithPopup, signOut as firebaseSignOut, onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import { recordUserSession } from "../services/dataService";
 
 const AuthContext = createContext(null);
@@ -29,16 +30,48 @@ export function AuthProvider({ children }) {
     return unsub;
   }, []);
 
+  const ALLOWED_DOMAIN = "rishihood.edu.in";
+
   const signInWithGoogle = async () => {
     try {
       const res = await signInWithPopup(auth, provider);
-      localStorage.removeItem("guest_user");
-      if (res.user) {
-        recordUserSession(res.user).catch(() => {});
+      const email = res.user?.email || "";
+      const uid   = res.user?.uid   || "";
+
+      // ── Domain gate: allow @rishihood.edu.in OR any subdomain ──
+      const isRishihoodEmail =
+        email.toLowerCase().endsWith(`@${ALLOWED_DOMAIN}`) ||
+        email.toLowerCase().endsWith(`.${ALLOWED_DOMAIN}`);
+
+      if (!isRishihoodEmail) {
+        // ── Existing-user bypass: check if this uid already has data in Firestore ──
+        // This ensures zero disruption to users who signed up before the email restriction.
+        let existsInDB = false;
+        try {
+          const snap = await getDoc(doc(db, "users", uid));
+          existsInDB = snap.exists();
+        } catch (e) {
+          // Firestore unreachable – fail safe: block the new user
+          existsInDB = false;
+        }
+
+        if (!existsInDB) {
+          // Brand-new user with a non-Rishihood email → block immediately
+          await firebaseSignOut(auth);
+          const err = new Error(
+            `Only Rishihood email IDs (ending in .${ALLOWED_DOMAIN}) are allowed.`
+          );
+          err.code = "auth/unauthorized-email-domain";
+          throw err;
+        }
+        // Existing user with non-Rishihood email → allow (grandfathered in)
       }
+
+      localStorage.removeItem("guest_user");
+      recordUserSession(res.user).catch(() => {});
       return res;
     } catch (err) {
-      console.warn("Google popup error:", err);
+      console.warn("Google sign-in error:", err);
       throw err;
     }
   };

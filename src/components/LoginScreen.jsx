@@ -28,7 +28,9 @@ export default function LoginScreen({ onClose }) {
     } catch (err) {
       console.error("Login error:", err);
       const currentHost = window.location.hostname;
-      if (err.code === "auth/unauthorized-domain") {
+      if (err.code === "auth/unauthorized-email-domain") {
+        setError("🚫 Only Rishihood email IDs (ending in .rishihood.edu.in) are allowed. Please sign in with your official student account.");
+      } else if (err.code === "auth/unauthorized-domain") {
         setError(`Domain "${currentHost}" is not authorized in Firebase. Please add "${currentHost}" to Firebase Console → Authentication → Settings → Authorized domains.`);
       } else if (err.code === "auth/popup-blocked") {
         setError("Popup was blocked by your browser. Please allow popups for this site and try again.");
@@ -83,7 +85,7 @@ export default function LoginScreen({ onClose }) {
             Create Your <span className={styles.titleGradient}>Own Meal</span>
           </h1>
           <p className={styles.subtitle}>
-            Sign in with your student Google account to curate your daily thali &amp; help upgrade the campus mess.
+            Sign in with your <strong>Rishihood email ID</strong> (ending in .rishihood.edu.in) to curate your daily thali &amp; help upgrade the campus mess.
           </p>
         </div>
 
@@ -158,7 +160,7 @@ export default function LoginScreen({ onClose }) {
         {/* Trust & Privacy Note */}
         <div className={styles.trustNote}>
           <ShieldIcon size={13} color="#059669" />
-          <span>Fast, 1-click sign in · Use Rishihood Mail ID</span>
+          <span>1-click sign in · Use your Rishihood Mail ID (.rishihood.edu.in)</span>
         </div>
       </div>
     </div>
