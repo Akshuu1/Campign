@@ -13,8 +13,29 @@ export function AuthProvider({ children }) {
     // Check if guest user was previously saved
     const savedGuest = localStorage.getItem("guest_user");
 
-    const unsub = onAuthStateChanged(auth, (u) => {
+    const unsub = onAuthStateChanged(auth, async (u) => {
       if (u) {
+        const email = u.email || "";
+        const isRishihoodEmail =
+          email.toLowerCase().endsWith(`@${ALLOWED_DOMAIN}`) ||
+          email.toLowerCase().endsWith(`.${ALLOWED_DOMAIN}`);
+
+        if (!isRishihoodEmail) {
+          try {
+            const snap = await getDoc(doc(db, "users", u.uid));
+            if (!snap.exists()) {
+              await firebaseSignOut(auth);
+              setUser(null);
+              return;
+            }
+          } catch (e) {
+            // Fail safe block
+            await firebaseSignOut(auth);
+            setUser(null);
+            return;
+          }
+        }
+
         setUser(u);
         recordUserSession(u).catch(() => {});
       } else if (savedGuest) {
@@ -44,23 +65,22 @@ export function AuthProvider({ children }) {
         email.toLowerCase().endsWith(`.${ALLOWED_DOMAIN}`);
 
       if (!isRishihoodEmail) {
-        const additionalInfo = getAdditionalUserInfo(res);
-        const isNewUser = additionalInfo?.isNewUser;
+        let existsInDB = false;
+        try {
+          const snap = await getDoc(doc(db, "users", uid));
+          existsInDB = snap.exists();
+        } catch (e) {
+          existsInDB = false;
+        }
 
-        if (isNewUser) {
-          // Brand-new user with a non-Rishihood email → block immediately and delete their Auth record
-          try {
-            await deleteUser(res.user);
-          } catch (e) {
-            await firebaseSignOut(auth);
-          }
+        if (!existsInDB) {
+          await firebaseSignOut(auth);
           const err = new Error(
             `Only Rishihood email IDs (ending in .${ALLOWED_DOMAIN}) are allowed.`
           );
           err.code = "auth/unauthorized-email-domain";
           throw err;
         }
-        // Existing user with non-Rishihood email → allow (grandfathered in)
       }
 
       localStorage.removeItem("guest_user");
