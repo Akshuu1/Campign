@@ -16,6 +16,17 @@ import { verifyAdminEmail, verifyAdminPasscode } from "../utils/security";
 import akshatPhoto from "../assets/hero_nobg.png";
 import styles from "./AdminPortal.module.css";
 
+const formatISTDate = (dateStr) => {
+  if (!dateStr) return "";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d)) return dateStr;
+    return d.toLocaleString('en-US', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' });
+  } catch (e) {
+    return dateStr;
+  }
+};
+
 export default function AdminPortal({ onAnnouncementChange }) {
   const { user } = useAuth();
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -246,7 +257,7 @@ export default function AdminPortal({ onAnnouncementChange }) {
       const lItems = `"${(s.menus?.Lunch || []).join(", ").replace(/"/g, '""')}"`;
       const sItems = `"${(s.menus?.Snacks || []).join(", ").replace(/"/g, '""')}"`;
       const dItems = `"${(s.menus?.Dinner || []).join(", ").replace(/"/g, '""')}"`;
-      return `${s.uid},${cleanName},${cleanEmail},${domain},${s.emailVerified ? "Yes" : "No"},${s.meals || 0},${bItems},${lItems},${sItems},${dItems},${s.votes || 0},"${s.lastSignInTime || ""}"`;
+      return `${s.uid},${cleanName},${cleanEmail},${domain},${s.emailVerified ? "Yes" : "No"},${s.meals || 0},${bItems},${lItems},${sItems},${dItems},${s.votes || 0},"${formatISTDate(s.lastSignInTime) || ""}"`;
     }).join("\n");
 
     const blob = new Blob([headers + rows], { type: "text/csv;charset=utf-8;" });
@@ -893,7 +904,7 @@ service cloud.firestore {
                         <span>OAuth 2.0 Verified</span>
                       </div>
                       <div className={styles.metaRowItemMuted}>
-                        <span>🕒 {st.lastSignInTime || "Active recently"}</span>
+                        <span>🕒 {formatISTDate(st.lastSignInTime) || "Active recently"}</span>
                       </div>
                       {st.creationTime && (
                         <div className={styles.metaRowItemMuted}>
@@ -1118,7 +1129,7 @@ service cloud.firestore {
                 <div className={styles.metaCardItem}>
                   <span className={styles.metaCardLabel}>Last Sign In</span>
                   <strong className={styles.metaCardVal}>
-                    {selectedStudent.lastSignInTime || "Active recently"}
+                    {formatISTDate(selectedStudent.lastSignInTime) || "Active recently"}
                   </strong>
                 </div>
                 <div className={styles.metaCardItem}>

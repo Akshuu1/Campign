@@ -342,7 +342,7 @@ export async function recordUserSession(user) {
     emailVerified: !!user.emailVerified,
     provider: user.providerData?.[0]?.providerId || "google.com",
     lastLoginAt: Date.now(),
-    lastSignInTime: user.metadata?.lastSignInTime ? new Date(user.metadata.lastSignInTime).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }) : new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }),
+    lastSignInTime: user.metadata?.lastSignInTime || new Date().toISOString(),
     creationTime: user.metadata?.creationTime || new Date().toISOString()
   };
 
