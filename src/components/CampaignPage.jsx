@@ -10,18 +10,18 @@ const INSTAGRAM_URL = "https://www.instagram.com/akshat_agrawal.14";
 const INSTAGRAM_HANDLE = "@akshat_agrawal.14";
 
 const PROMISES = [
-  { Icon: ForkKnifeIcon, color: "#FB8500", title: "Better Menu, Better Variety",      desc: "More variety, less repetition. Italian dishes, Chole Bhature, and the food YOU actually want on the menu." },
-  { Icon: TrophyIcon,    color: "#FFAA00", title: "He Listens to YOU",                desc: "Every meal request matters. Direct line to the mess contractor and kitchen staff — no more shouting into the void." },
-  { Icon: PlateIcon,     color: "#FF5A5F", title: "Quick Resolution",                 desc: "Cold food? Long queues? Strict resolution time for student mess complaints — not next week, NOW." },
-  { Icon: VoteIcon,      color: "#10B981", title: "Quality You Can Taste",            desc: "Address recurring quality issues and ensure food is prepared fresh, served hot, and stored hygienically." },
-  { Icon: ForkKnifeIcon, color: "#FFAA00", title: "A Menu Students Actually Want",    desc: "Replace unpopular items like lauki, torai, and gatte with crowd favourites — voted by YOU." },
-  { Icon: PlateIcon,     color: "#FB8500", title: "Reduce Outside Ordering",          desc: "When the mess is good, you stop spending extra money on outside food. Simple promise, real savings." },
+  { Icon: ForkKnifeIcon, color: "#FB8500", title: "Better Menu, Better Variety", desc: "More variety, less repetition. Italian dishes, Chole Bhature, and the food YOU actually want on the menu." },
+  { Icon: TrophyIcon, color: "#FFAA00", title: "He Listens to YOU", desc: "Every meal request matters. Direct line to the mess contractor and kitchen staff — no more shouting into the void." },
+  { Icon: PlateIcon, color: "#FF5A5F", title: "Quick Resolution", desc: "Cold food? Long queues? Strict resolution time for student mess complaints — not next week, NOW." },
+  { Icon: VoteIcon, color: "#10B981", title: "Quality You Can Taste", desc: "Address recurring quality issues and ensure food is prepared fresh, served hot, and stored hygienically." },
+  { Icon: ForkKnifeIcon, color: "#FFAA00", title: "A Menu Students Actually Want", desc: "Replace unpopular items like lauki, torai, and gatte with crowd favourites — voted by YOU." },
+  { Icon: PlateIcon, color: "#FB8500", title: "Reduce Outside Ordering", desc: "When the mess is good, you stop spending extra money on outside food. Simple promise, real savings." },
 ];
 
 const WHY_AKSHAT = [
-  { Icon: UsersIcon, color: "#FF3366", title: "Student-First Thinking",   desc: "Built this entire digital platform just to hear what you want to eat. That's not a candidate — that's a Rep who already works for you." },
-  { Icon: MegaphoneIcon, color: "#FB8500", title: "Speaks Your Language",      desc: "Not just another hostel politician. Akshat understands mess life because he lives it every single day, just like you." },
-  { Icon: SparkleIcon, color: "#F9B84A", title: "Already Taking Action",     desc: "The meal planner, leaderboard, and suggestion box are live right now. Akshat didn't wait to win — he started working from day one." },
+  { Icon: UsersIcon, color: "#FF3366", title: "Student-First Thinking", desc: "Built this entire digital platform just to hear what you want to eat. That's not a candidate — that's a Rep who already works for you." },
+  { Icon: MegaphoneIcon, color: "#FB8500", title: "Speaks Your Language", desc: "Not just another hostel politician. Akshat understands mess life because he lives it every single day, just like you." },
+  { Icon: SparkleIcon, color: "#F9B84A", title: "Already Taking Action", desc: "The meal planner, leaderboard, and suggestion box are live right now. Akshat didn't wait to win — he started working from day one." },
   { Icon: ShieldIcon, color: "#4CAF82", title: "Accountable & Transparent", desc: "Every suggestion you submit is tracked and reviewed. No empty promises — he shows his work." },
 ];
 
@@ -31,10 +31,10 @@ function useCountdown(targetDate) {
     const diff = new Date(targetDate) - new Date();
     if (diff <= 0) return { days: 0, hours: 0, mins: 0, secs: 0 };
     return {
-      days:  Math.floor(diff / 86400000),
+      days: Math.floor(diff / 86400000),
       hours: Math.floor((diff % 86400000) / 3600000),
-      mins:  Math.floor((diff % 3600000)  / 60000),
-      secs:  Math.floor((diff % 60000)    / 1000),
+      mins: Math.floor((diff % 3600000) / 60000),
+      secs: Math.floor((diff % 60000) / 1000),
     };
   };
   const [time, setTime] = useState(calc);
@@ -64,12 +64,12 @@ function CountUp({ target, duration = 1500 }) {
 function ParticleField() {
   const particles = Array.from({ length: 18 }, (_, i) => ({
     id: i,
-    emoji: ["🍛","🍱","🥘","🍲","🥗","🍜","🥙","🌮","🥞","🍚","🥣","🍛"][i % 12],
+    emoji: ["🍛", "🍱", "🥘", "🍲", "🥗", "🍜", "🥙", "🌮", "🥞", "🍚", "🥣", "🍛"][i % 12],
     left: `${5 + (i * 5.4) % 90}%`,
-    top:  `${10 + (i * 7.3) % 80}%`,
+    top: `${10 + (i * 7.3) % 80}%`,
     delay: `${(i * 0.4).toFixed(1)}s`,
-    dur:   `${3 + (i % 4)}s`,
-    size:  0.8 + (i % 3) * 0.25,
+    dur: `${3 + (i % 4)}s`,
+    size: 0.8 + (i % 3) * 0.25,
   }));
   return (
     <div className={styles.particleField} aria-hidden="true">
@@ -111,6 +111,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
   const [shareCount, setShareCount] = useState(0);
   const [igClicked, setIgClicked] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
+
   const heroRef = useRef(null);
   const time = useCountdown("2026-10-05T08:00:00");
   useReveal(); // Initialize scroll reveal
@@ -146,7 +147,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
         title: "Create Your Own Meal — Vote Akshat!",
         text: "Vote Akshat for Mess Representative on 5th October! Design your perfect meal menu here:",
         url: window.location.href,
-      }).catch(() => {});
+      }).catch(() => { });
     } else {
       navigator.clipboard.writeText(window.location.href);
       alert("Link copied! Share with your friends and hostel groups.");
@@ -194,10 +195,10 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
           {/* Live countdown */}
           <div className={styles.countdownRow}>
             {[
-              { val: time.days,  lbl: "Days"  },
+              { val: time.days, lbl: "Days" },
               { val: time.hours, lbl: "Hours" },
-              { val: time.mins,  lbl: "Mins"  },
-              { val: time.secs,  lbl: "Secs"  },
+              { val: time.mins, lbl: "Mins" },
+              { val: time.secs, lbl: "Secs" },
             ].map(({ val, lbl }) => (
               <div key={lbl} className={styles.countUnit}>
                 <span className={styles.countNum}>{String(val).padStart(2, "0")}</span>
@@ -237,7 +238,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
       <div className={`${styles.statsStrip} ${styles.reveal}`}>
         {[
           { num: 247, suffix: "+", lbl: "Campaign Shares" },
-          { num: 6,   suffix: "",  lbl: "Concrete Promises" },
+          { num: 6, suffix: "", lbl: "Concrete Promises" },
           { num: daysLeft > 0 ? daysLeft : 1, suffix: "", lbl: "Days to Vote" },
           { num: 100, suffix: "%", lbl: "Student-Driven" },
         ].map(({ num, suffix, lbl }) => (
@@ -383,7 +384,7 @@ export default function CampaignPage({ onNavigateToSuggestions }) {
       <p className={styles.footer}>
         Made by <strong>Akshat</strong> — Your Mess Representative Candidate · Voting on <strong>5th October</strong>
 
-        
+
       </p>
     </div>
   );

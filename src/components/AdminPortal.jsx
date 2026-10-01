@@ -65,6 +65,7 @@ export default function AdminPortal({ onAnnouncementChange }) {
   const [studentSearch, setStudentSearch] = useState("");
   const [studentFilter, setStudentFilter] = useState("all"); // all | university | with_meals | active_today
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [swipeVotes, setSwipeVotes] = useState([]);
   const [copiedEmail, setCopiedEmail] = useState("");
 
   // Announcement editor
@@ -80,6 +81,10 @@ export default function AdminPortal({ onAnnouncementChange }) {
       ]);
       setSuggestions(sugList);
       setStudents(googleUsersList);
+
+      let sw = [];
+      try { sw = JSON.parse(localStorage.getItem("akshat_swipe_votes")) || []; } catch(e) {}
+      setSwipeVotes(sw);
     } catch (e) {
       console.warn("Failed to load admin data:", e);
     } finally {
@@ -997,6 +1002,52 @@ service cloud.firestore {
               );
             })}
           </div>
+
+          {/* Swipe Voting Analytics */}
+          {swipeVotes.length > 0 && (
+            <>
+              <h3 className={styles.subHeading} style={{ marginTop: '3rem' }}>🔥 Live Swipe Voting Results</h3>
+              <div className={styles.demandGrid}>
+                {Object.entries(
+                  swipeVotes.reduce((acc, v) => {
+                    if (!acc[v.dishName]) acc[v.dishName] = { likes: 0, bans: 0, emoji: v.emoji };
+                    if (v.direction === 'right') acc[v.dishName].likes++;
+                    if (v.direction === 'left') acc[v.dishName].bans++;
+                    return acc;
+                  }, {})
+                )
+                .sort((a, b) => b[1].likes - a[1].likes)
+                .map(([dishName, data], index) => {
+                  const total = data.likes + data.bans;
+                  const likePct = Math.round((data.likes / total) * 100);
+                  return (
+                    <div key={dishName} className={styles.demandCard}>
+                      <div className={styles.demandTopRow}>
+                        <span style={{ fontSize: '1.5rem', marginRight: '0.5rem' }}>{data.emoji}</span>
+                        <strong className={styles.demandName} style={{ flex: 1 }}>{dishName}</strong>
+                        <span style={{ color: '#00CC99', fontWeight: 800 }}>{likePct}% Loved It</span>
+                      </div>
+                      <div className={styles.demandBarWrap} style={{ background: '#FF3366', overflow: 'hidden' }}>
+                        <div
+                          style={{
+                            height: '100%',
+                            width: `${likePct}%`,
+                            background: '#00CC99',
+                            borderRadius: '8px'
+                          }}
+                        />
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginTop: '0.5rem', color: '#8E8273' }}>
+                        <span>{data.likes} Votes</span>
+                        <span>{data.bans} Bans</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
+
         </section>
       )}
 

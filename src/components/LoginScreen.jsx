@@ -85,7 +85,7 @@ export default function LoginScreen({ onClose }) {
             Create Your <span className={styles.titleGradient}>Own Meal</span>
           </h1>
           <p className={styles.subtitle}>
-            Sign in with your <strong>Rishihood email ID</strong> (ending in .rishihood.edu.in) to curate your daily thali &amp; help upgrade the campus mess.
+            Sign in with your <strong>Rishihood email ID</strong> to curate your daily thali &amp; help upgrade the campus mess.
           </p>
         </div>
 
@@ -160,7 +160,7 @@ export default function LoginScreen({ onClose }) {
         {/* Trust & Privacy Note */}
         <div className={styles.trustNote}>
           <ShieldIcon size={13} color="#059669" />
-          <span>1-click sign in · Use your Rishihood Mail ID (.rishihood.edu.in)</span>
+          <span>1-click secure sign in</span>
         </div>
       </div>
     </div>

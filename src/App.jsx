@@ -6,28 +6,33 @@ import CampaignPage from "./components/CampaignPage";
 import SuggestionsPage from "./components/SuggestionsPage";
 import Leaderboard from "./components/Leaderboard";
 import MealPlanner from "./components/MealPlanner";
+import SwipeVoting from "./components/SwipeVoting";
 import {
   VoteIcon, TrophyIcon, PlateIcon, WatermelonIcon, CrownIcon,
   ChatIcon, SparkleIcon
 } from "./components/icons/Icons";
 import { getCampaignAnnouncement } from "./services/dataService";
 import { verifyAdminEmail } from "./utils/security";
+import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
+import akshatCartoon from "./assets/akshat_avatar.jpg";
 
 const AdminPortal = React.lazy(() => import("./components/AdminPortal"));
 
 const BASE_TABS = [
   { id: "campaign", label: "Why to Vote Me", Icon: VoteIcon },
+  { id: "swipe", label: "Swipe Food like ur EX", Icon: SparkleIcon },
   { id: "planner", label: "Add your Meal", Icon: PlateIcon },
   { id: "leaderboard", label: "Leaderboard", Icon: TrophyIcon, highlight: true },
   { id: "suggestions", label: "Suggestions", Icon: ChatIcon },
 ];
 
 export default function App() {
-  const { user, signOut } = useAuth();
+  const { user, signOut, signInWithGoogle } = useAuth();
   const [activeTab, setActiveTab] = useState("campaign");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [bannerText, setBannerText] = useState(getCampaignAnnouncement());
   const [isCurrentUserAdmin, setIsCurrentUserAdmin] = useState(false);
+  const [badFoodClicks, setBadFoodClicks] = useState(0);
 
   // Securely verify whether the logged-in user is the authorized Admin
   useEffect(() => {
@@ -68,6 +73,27 @@ export default function App() {
       setActiveTab("campaign");
     }
   }, [user, showLoginModal, isCurrentUserAdmin, activeTab]);
+  // Auto-reset login gate if user returns to tab without completing login
+  useEffect(() => {
+    const handleReturnToTab = () => {
+      if (badFoodClicks >= 3 && !user) {
+        // Wait 1.5s to let Firebase process a successful login first
+        setTimeout(() => {
+          setBadFoodClicks(prev => (prev >= 3 ? 0 : prev));
+        }, 1500);
+      }
+    };
+
+    window.addEventListener("focus", handleReturnToTab);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") handleReturnToTab();
+    });
+
+    return () => {
+      window.removeEventListener("focus", handleReturnToTab);
+      document.removeEventListener("visibilitychange", handleReturnToTab);
+    };
+  }, [badFoodClicks, user]);
 
   // ── Auth loading splash ──
   if (user === undefined) {
@@ -88,50 +114,132 @@ export default function App() {
         <div className={styles.gateBlob2} />
         <div className={styles.gateBlob3} />
 
-        <div className={styles.gateInner}>
-          {/* Left: branding + copy */}
+        <motion.div 
+          className={styles.gateInner}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          {/* Left: Talking Avatar & Game Logic */}
           <div className={styles.gateLeft}>
-            <div className={styles.gateLogoRow}>
-              <WatermelonIcon size={44} />
-              <div>
-                <h1 className={styles.gateTitle}>Create Your Own Meal</h1>
-                <p className={styles.gateSub}>by <strong>Akshat</strong></p>
-              </div>
+            
+            <div className={styles.interactiveAvatarSection}>
+              <motion.div 
+                className={styles.avatarWrap}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
+              >
+                <img src={akshatCartoon} alt="Akshat Avatar" className={styles.avatarImgLarge} />
+              </motion.div>
+
+              <AnimatePresence mode="wait">
+                <motion.div 
+                  key={badFoodClicks >= 3 ? "unlocked" : "locked"}
+                  className={styles.speechBubble}
+                  initial={{ opacity: 0, scale: 0.5, x: -20, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+                  transition={{ duration: 0.5, type: "spring" }}
+                >
+                  {badFoodClicks >= 3 ? (
+                    <>
+                      <p><strong>BOOM! 💥</strong></p>
+                      <p>You destroyed the tasteless food! Portal unlocked. Sign in and let's fix the menu!</p>
+                    </>
+                  ) : (
+                    <>
+                      <p><strong>Hold up! ✋</strong></p>
+                      <p>Prove you hate bad mess food. Smash that gross Lauki {3 - badFoodClicks} more time{3 - badFoodClicks === 1 ? '' : 's'} to unlock the portal!</p>
+                    </>
+                  )}
+                  <div className={styles.speechBubbleTail} />
+                </motion.div>
+              </AnimatePresence>
             </div>
 
-            <div className={styles.gateHeadline}>
-
-              <h2 className={styles.gateH2}>
+            <motion.div 
+              className={styles.gateHeadline}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
+              <h2 className={styles.gateH2} style={{ fontSize: '3.2rem', lineHeight: '1.05', letterSpacing: '-0.04em' }}>
                 The campus mess,<br />
-                <span className={styles.gateAccent}>reimagined by you.</span>
+                <span className={styles.gateAccent} style={{ background: 'linear-gradient(135deg, #FF3366, #FF9900)', WebkitBackgroundClip: 'text', color: 'transparent' }}>reimagined by you.</span>
               </h2>
-              <p className={styles.gateDesc}>
-                Design your daily thali, vote on the leaderboard, and send direct suggestions
-                to <strong>Akshat</strong> — all in one place. Sign in to get started.
-              </p>
-            </div>
+            </motion.div>
 
-            <div className={styles.gateFeatures}>
+            <div className={styles.gateFeatures} style={{ marginTop: '1.5rem' }}>
               {[
-                { Icon: PlateIcon, color: "#FF3366", label: "Design Custom Meals" },
-                { Icon: TrophyIcon, color: "#FB8500", label: "Campus Leaderboard" },
-                { Icon: ChatIcon, color: "#00CC99", label: "Direct Suggestions" },
-              ].map(({ Icon, color, label }) => (
-                <div key={label} className={styles.gateFeatureItem}>
-                  <div className={styles.gateFeatureIcon}>
-                    <Icon size={18} color={color} />
+                { label: "Vote on Daily Menus", color: "#FF3366" },
+                { label: "Suggest New Dishes", color: "#FB8500" },
+                { label: "Direct Suggestions", color: "#00CC99" },
+              ].map(({ color, label }, index) => (
+                <motion.div 
+                  key={label} 
+                  className={styles.gateFeatureItem}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 1.2 + (index * 0.1) }}
+                  style={{ gap: '1rem', fontSize: '1.05rem', fontWeight: 700 }}
+                >
+                  <div className={styles.gateFeatureIcon} style={{ background: color, border: 'none', width: '28px', height: '28px', borderRadius: '50%', minWidth: '28px' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   </div>
                   <span>{label}</span>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
 
-          {/* Right: login card */}
-          <div className={styles.gateRight}>
-            <LoginScreen />
+          {/* Right: Interactive Game Area */}
+          <div className={styles.gateRight} style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <AnimatePresence mode="wait">
+              {badFoodClicks < 3 ? (
+                <motion.div
+                  key="game"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1, y: [0, -20, 0] }}
+                  exit={{ opacity: 0, scale: 0, rotate: 360 }}
+                  transition={{ 
+                    y: { repeat: Infinity, duration: 2, ease: "easeInOut" },
+                    default: { duration: 0.5, type: "spring", bounce: 0.5 }
+                  }}
+                  onClick={async () => {
+                    const newClicks = badFoodClicks + 1;
+                    setBadFoodClicks(newClicks);
+                    if (newClicks >= 3) {
+                      try {
+                        await signInWithGoogle();
+                      } catch (error) {
+                        console.error("Login failed:", error);
+                        // Reset if login fails so they can try again
+                        setBadFoodClicks(0);
+                      }
+                    }
+                  }}
+                  className={styles.smashFood}
+                  whileHover={{ scale: 1.1, rotate: [0, -10, 10, -10, 0] }}
+                  whileTap={{ scale: 0.8 }}
+                >
+                  🥒
+                </motion.div>
+              ) : (
+                <motion.div 
+                  key="loading"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+                >
+                  <span className={styles.spinner} style={{ width: '40px', height: '40px', borderWidth: '4px' }} />
+                  <span style={{ color: 'white', fontWeight: 600, fontSize: '1.1rem' }}>Connecting securely...</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-        </div>
+        </motion.div>
       </div>
     );
   }
@@ -227,6 +335,7 @@ export default function App() {
         {activeTab === "suggestions" && (
           <SuggestionsPage onBackToCampaign={() => setActiveTab("campaign")} />
         )}
+        {activeTab === "swipe" && <SwipeVoting />}
         {activeTab === "planner" && <MealPlanner />}
         {activeTab === "leaderboard" && <Leaderboard />}
         {activeTab === "admin" && isCurrentUserAdmin && (

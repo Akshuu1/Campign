@@ -156,9 +156,9 @@ export default function MealPlanner() {
           const d = snap.data();
           const remoteMeals = {
             breakfast: d.breakfast || [],
-            lunch:     d.lunch     || [],
-            dinner:    d.dinner    || [],
-            snacks:    d.snacks    || [],
+            lunch: d.lunch || [],
+            dinner: d.dinner || [],
+            snacks: d.snacks || [],
           };
           setMeals(remoteMeals);
           localStorage.setItem(storageKey, JSON.stringify(remoteMeals));

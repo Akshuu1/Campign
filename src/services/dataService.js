@@ -577,7 +577,7 @@ export async function removeSuggestionItem(id) {
 export function getCampaignAnnouncement() {
   try {
     const custom = localStorage.getItem(STORAGE_KEYS.ANNOUNCEMENT);
-    if (custom && !custom.includes("⚡")) return custom;
+    if (custom) return custom;
   } catch (e) {}
   return "Voting opens on 5th October · Cast your vote for Akshat";
 }
