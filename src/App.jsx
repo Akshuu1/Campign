@@ -28,7 +28,7 @@ const BASE_TABS = [
 
 export default function App() {
   const { user, signOut, signInWithGoogle } = useAuth();
-  const [activeTab, setActiveTab] = useState("campaign");
+  const [activeTab, setActiveTab] = useState("planner");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [bannerText, setBannerText] = useState(getCampaignAnnouncement());
   const [isCurrentUserAdmin, setIsCurrentUserAdmin] = useState(false);
@@ -67,10 +67,10 @@ export default function App() {
     if (user && showLoginModal) {
       setShowLoginModal(false);
     }
-    if (!user && activeTab !== "campaign") {
+    if (user === null && activeTab !== "campaign") {
       setActiveTab("campaign");
-    } else if (activeTab === "admin" && !isCurrentUserAdmin) {
-      setActiveTab("campaign");
+    } else if (user && activeTab === "admin" && !isCurrentUserAdmin) {
+      setActiveTab("planner");
     }
   }, [user, showLoginModal, isCurrentUserAdmin, activeTab]);
   // Auto-reset login gate if user returns to tab without completing login
@@ -212,6 +212,7 @@ export default function App() {
                     if (newClicks >= 3) {
                       try {
                         await signInWithGoogle();
+                        setActiveTab("planner");
                       } catch (error) {
                         console.error("Login failed:", error);
                         // Reset if login fails so they can try again
