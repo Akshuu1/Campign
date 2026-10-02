@@ -30,11 +30,12 @@ const MEAL_CONFIGS = {
     fruitOptions: [
       { emoji: "🍌", name: "Banana" }, { emoji: "🍎", name: "Apple" },
       { emoji: "🍊", name: "Orange" }, { emoji: "🍉", name: "Watermelon" },
-
+      { emoji: "🍈", name: "Papaya" }, { emoji: "🍇", name: "Grapes" }
     ],
     hotSpecials: [
       "Masala Dosa", "Indori Poha", "Aloo Paratha",
-      "Idli Vada", "Upma Chutney", "Moong Dal Chilla"
+      "Idli Vada", "Upma Chutney", "Moong Dal Chilla",
+      "Puri Sabzi", "Uttapam", "Chole Bhature"
     ],
     sticker: "🌅 FRESH START",
     nextId: "lunch",
@@ -54,20 +55,20 @@ const MEAL_CONFIGS = {
     thaliSections: [
       {
         title: "Curries & Dal",
-        items: ["Paneer Butter Masala", "Rajma", "Dal Makhani", "Chole", "Kadai Mushroom"]
+        items: ["Paneer Butter Masala", "Rajma", "Dal Makhani", "Chole", "Kadai Mushroom", "Mix Veg", "Malai Kofta", "Dum Aloo"]
       },
       {
         title: "Breads & Rice",
-        items: ["Ghee Roti", "Garlic Naan", "Jeera Rice", "Basmati Rice", "Tandoori Roti"]
+        items: ["Ghee Roti", "Garlic Naan", "Jeera Rice", "Basmati Rice", "Tandoori Roti", "Plain Roti", "Veg Fried Rice"]
       },
       {
         title: "Sides",
-        items: ["Boondi Raita", "Crisp Papad", "Green Salad", "Mango Pickle"]
+        items: ["Boondi Raita", "Crisp Papad", "Green Salad", "Mango Pickle", "Onion Salad", "Plain Dahi"]
       }
     ],
     spiceLevels: ["Mild", "Medium 🌶️", "Spicy 🌶️🌶️"],
     sweetSuggestions: [
-      "Gulab Jamun", "Rasgulla", "Kheer", "Gajar Halwa", "Jalebi", "Moong Dal Halwa"
+      "Gulab Jamun", "Rasgulla", "Kheer", "Gajar Halwa", "Jalebi", "Moong Dal Halwa", "Fruit Custard"
     ],
     sticker: "🥑 POWER UP",
     nextId: "snacks",
@@ -85,15 +86,16 @@ const MEAL_CONFIGS = {
     heroGradient: "linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 55%, #FECDD3 100%)",
 
     snackPicks: [
-      { tag: "Hot Bites", items: ["Hot Samosa", "Paneer Pakoda", "Aloo Tikki", "Bread Pakoda"] },
-      { tag: "Hostel Hits", items: ["Cheese Maggi", "Grilled Sandwich", "Pav Bhaji", "Bhel Puri"] },
-      { tag: "Baked", items: ["Peri Peri Fries", "Bun Maska", "Hot Jalebi", "Corn Chaat"] }
+      { tag: "Hot Bites", items: ["Hot Samosa", "Paneer Pakoda", "Aloo Tikki", "Bread Pakoda", "Vada Pav", "Kachori"] },
+      { tag: "Hostel Hits", items: ["Cheese Maggi", "Grilled Sandwich", "Pav Bhaji", "Bhel Puri", "White Sauce Pasta"] },
+      { tag: "Baked", items: ["Peri Peri Fries", "Bun Maska", "Hot Jalebi", "Corn Chaat", "Garlic Bread"] }
     ],
     drinkPicks: [
       { emoji: "☕", name: "Cold Coffee" }, { emoji: "🥛", name: "Sweet Lassi" },
       { emoji: "🥛", name: "Salted Lassi" }, { emoji: "🧋", name: "Rose Milk" },
       { emoji: "🍋", name: "Lemon Soda" }, { emoji: "🥤", name: "Mango Shake" },
-      { emoji: "🧃", name: "Butter Milk" }, { emoji: "🍵", name: "Masala Chai" }
+      { emoji: "🧃", name: "Butter Milk" }, { emoji: "🍵", name: "Masala Chai" },
+      { emoji: "🥤", name: "Oreo Shake" }, { emoji: "🍹", name: "Iced Tea" }
     ],
     sticker: "🍉 CHILL BITES",
     nextId: "dinner",
@@ -111,9 +113,9 @@ const MEAL_CONFIGS = {
     heroGradient: "linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 55%, #FDE68A 100%)",
 
     dinnerSpecials: [
-      { type: "Campus Favorites", items: ["Veg Biryani & Salan", "Dal Tadka & Rice", "Kadai Paneer & Phulka"] },
-      { type: "Comfort Supper", items: ["Khichdi & Papad", "Paneer Bhurji & Roti", "Veg Pulao & Raita"] },
-      { type: "Sweet Dishes", items: ["Gulab Jamun", "Ice Cream", "Moong Dal Halwa", "Rasgulla", "Kheer", "Jalebi"] }
+      { type: "Campus Favorites", items: ["Veg Biryani & Salan", "Dal Tadka & Rice", "Kadai Paneer & Phulka", "Matar Paneer & Roti", "Manchurian & Fried Rice"] },
+      { type: "Comfort Supper", items: ["Khichdi & Papad", "Paneer Bhurji & Roti", "Veg Pulao & Raita", "Lemon Rice", "Dahi Vada"] },
+      { type: "Sweet Dishes", items: ["Gulab Jamun", "Ice Cream", "Moong Dal Halwa", "Rasgulla", "Kheer", "Jalebi", "Rabri", "Brownie"] }
     ],
     sticker: "🍍 NIGHT DELIGHT",
     nextId: "breakfast",
@@ -547,7 +549,7 @@ export default function MealPlanner() {
               <div className={styles.fruitEmojiGrid}>
                 {(config.dinnerSpecials.find(c => c.type === "Sweet Dishes")?.items || []).map((sweet) => {
                   const isAdded = currentList.includes(sweet);
-                  const icons = { "Gulab Jamun": "🟤", "Ice Cream": "🍦", "Moong Dal Halwa": "🟡", "Rasgulla": "⚪", "Kheer": "🥣", "Jalebi": "🌀" };
+                  const icons = { "Gulab Jamun": "🟤", "Ice Cream": "🍦", "Moong Dal Halwa": "🟡", "Rasgulla": "⚪", "Kheer": "🥣", "Jalebi": "🌀", "Rabri": "🥛", "Brownie": "🟫" };
                   return (
                     <button
                       key={sweet}

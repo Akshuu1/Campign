@@ -150,7 +150,7 @@ export default function App() {
                   ) : (
                     <>
                       <p><strong>Hold up! ✋</strong></p>
-                      <p>Prove you hate bad mess food. Smash that gross Lauki {3 - badFoodClicks} more time{3 - badFoodClicks === 1 ? '' : 's'} to unlock the portal!</p>
+                      <p>Prove you hate bad mess food. Smash that gross Cucumber {3 - badFoodClicks} more time{3 - badFoodClicks === 1 ? '' : 's'} to unlock the portal!</p>
                     </>
                   )}
                   <div className={styles.speechBubbleTail} />
